@@ -5,3 +5,10 @@ export enum AppRoute {
   RoomDev = '/dev-offer',
   Favorites = '/favorites',
 }
+
+
+export enum AuthorizationStatus {
+  Auth = 'AUTH',
+  NoAuth = 'NO_AUTH',
+  Unknown = 'UNKNOWN',
+}
