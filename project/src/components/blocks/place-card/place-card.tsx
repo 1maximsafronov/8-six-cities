@@ -3,11 +3,11 @@ import { Link } from 'react-router-dom';
 import type { Offer } from '../../../types/offer';
 
 type PlaceCardProps = {
-  offer: Offer
+  offer: Offer;
 }
 
 function PlaceCard(props: PlaceCardProps):JSX.Element {
-  const {offer} = props;
+  const {offer } = props;
   const {isPremium, picture, price, name, type, id} = offer;
 
   const premiumMark = (
