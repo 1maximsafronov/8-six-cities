@@ -1,6 +1,14 @@
-import PlaceCard from '../../blocks/place-card/place-card';
 
-function MainPage():JSX.Element {
+import PlacesList from '../../blocks/places-list/places-list';
+import {Offers} from '../../../types/offer';
+
+type MainPageProps = {
+  offers: Offers;
+}
+
+function MainPage(props: MainPageProps):JSX.Element {
+  const {offers}=props;
+
   return (
     <div className="page page--gray page--main">
       <header className="header">
@@ -82,20 +90,14 @@ function MainPage():JSX.Element {
                     <use xlinkHref="#icon-arrow-select"></use>
                   </svg>
                 </span>
-                <ul className="places__options places__options--custom places__options--opened">
+                <ul className="places__options places__options--custom">
                   <li className="places__option places__option--active" tabIndex={0}>Popular</li>
                   <li className="places__option" tabIndex={0}>Price: low to high</li>
                   <li className="places__option" tabIndex={0}>Price: high to low</li>
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <div className="cities__places-list places__list tabs__content">
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-                <PlaceCard />
-              </div>
+              <PlacesList offers={offers}/>
             </section>
             <div className="cities__right-section">
               <section className="cities__map map"></section>

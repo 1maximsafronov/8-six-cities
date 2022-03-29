@@ -1,10 +1,14 @@
-function PlaceCard():JSX.Element {
-  const isPremium = true;
-  const image = 'img/apartment-01.jpg';
-  const price = 120;
-  const name = 'Beautiful &amp; luxurious apartment at great location';
-  const type = 'Apartment';
+import { Link } from 'react-router-dom';
 
+import type { Offer } from '../../../types/offer';
+
+type PlaceCardProps = {
+  offer: Offer
+}
+
+function PlaceCard(props: PlaceCardProps):JSX.Element {
+  const {offer} = props;
+  const {isPremium, picture, price, name, type, id} = offer;
 
   const premiumMark = (
     <div className="place-card__mark">
@@ -16,9 +20,9 @@ function PlaceCard():JSX.Element {
     <article className="cities__place-card place-card">
       {isPremium && premiumMark}
       <div className="cities__image-wrapper place-card__image-wrapper">
-        <a href="#">
-          <img className="place-card__image" src={image} width="260" height="200" alt="Place image" />
-        </a>
+        <Link to={`/offer/${id}`}>
+          <img className="place-card__image" src={picture} width="260" height="200" alt="Place image" />
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -40,7 +44,7 @@ function PlaceCard():JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{name}</a>
+          <Link to={`/offer/${id}`}>{name}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>
