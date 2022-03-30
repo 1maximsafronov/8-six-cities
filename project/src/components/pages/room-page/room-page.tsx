@@ -1,9 +1,15 @@
 
 import PageHeader from '../../blocks/page-header/page-header';
 import PropertyGallery from '../../blocks/property/property-gallery/property-gallery';
-import Reviews from '../../blocks/reviews/reviews';
+import ReviewsSection from '../../blocks/reviews/reviews';
+import type {Reviews} from '../../../types/reviews';
 
-function RoomPage():JSX.Element {
+type RoomPageProps = {
+  reviews: Reviews;
+}
+
+function RoomPage({reviews}:RoomPageProps):JSX.Element {
+
   return (
     <div className="page">
       <PageHeader />
@@ -106,7 +112,9 @@ function RoomPage():JSX.Element {
                   </p>
                 </div>
               </div>
-              <Reviews className='property__reviews'/>
+              <ReviewsSection className='property__reviews'
+                reviews={reviews}
+              />
             </div>
           </div>
           <section className="property__map map"></section>
