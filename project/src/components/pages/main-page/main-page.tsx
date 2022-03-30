@@ -51,7 +51,11 @@ function MainPage(props: MainPageProps):JSX.Element {
               <PlacesList offers={offers} onCardHover={onCardHover}/>
             </section>
             <div className="cities__right-section">
-              <Map city={CITY}  offers={offers} selectedOffer={selectedOffer}/>
+              <Map className="cities__map"
+                selectedOffer={selectedOffer}
+                offers={offers}
+                city={CITY}
+              />
             </div>
           </div>
         </div>

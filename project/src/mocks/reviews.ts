@@ -2,6 +2,7 @@ import type {Reviews} from '../types/reviews';
 
 export const reviews: Reviews = [
   {
+    id: 1,
     text: 'Какойто комментарий',
     author: {
       name: 'Alex',
@@ -11,6 +12,7 @@ export const reviews: Reviews = [
     rating: 5,
   },
   {
+    id: 2,
     text: 'Ещё один коментарий',
     author: {
       name: 'Max',
@@ -20,6 +22,7 @@ export const reviews: Reviews = [
     rating: 3,
   },
   {
+    id: 3,
     text: 'Очень плохой коментарий',
     author: {
       name: 'Alex',

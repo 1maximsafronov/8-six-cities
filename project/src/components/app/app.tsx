@@ -28,11 +28,11 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomPage reviews={reviews}/>}
+          element={<RoomPage offers={offers} reviews={reviews}/>}
         />
         <Route
           path={AppRoute.RoomDev}
-          element={<RoomPage reviews={reviews}/>}
+          element={<RoomPage offers={offers} reviews={reviews}/>}
         />
         <Route
           path="*"

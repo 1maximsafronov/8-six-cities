@@ -20,7 +20,7 @@ function ReviewsSection(props: ReviewsSectionProps):JSX.Element {
       <ul className="reviews__list">
         {reviews.map((review, id) => (
           <ReviewsItem
-            key={`review-${review.rating}`}
+            key={`review-${review.id}`}
             review={review}
           />
         ))}

@@ -4,11 +4,13 @@ import useMap from '../../../hooks/useMap';
 import {City, Offers, Offer} from '../../../types/offer';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../../const';
 import 'leaflet/dist/leaflet.css';
+import classnames from 'classnames';
 
 type MapProps = {
   city: City;
   offers: Offers;
   selectedOffer: Offer | undefined;
+  className?: string | string[];
 };
 
 const defaultIcon = new Icon({
@@ -26,7 +28,7 @@ const selectedIcon = new Icon({
 const isSelectedOffer = (selected: Offer | undefined, offer: Offer): boolean => selected !== undefined && offer.id === selected.id;
 
 function Map(props: MapProps): JSX.Element {
-  const {city, offers, selectedOffer} = props;
+  const {city, offers, selectedOffer, className} = props;
 
   const mapRef = useRef(null);
   const map = useMap(mapRef, city);
@@ -48,7 +50,7 @@ function Map(props: MapProps): JSX.Element {
     }
   }, [map, offers, selectedOffer]);
 
-  return <section ref={mapRef} className="cities__map map" />;
+  return <section ref={mapRef} className={classnames('map', className)} />;
 }
 
 export default Map;
