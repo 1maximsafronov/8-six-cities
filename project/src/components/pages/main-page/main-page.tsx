@@ -1,20 +1,30 @@
 
+import {useState} from 'react';
 import PlacesList from '../../blocks/places-list/places-list';
 import PageHeader from '../../blocks/page-header/page-header';
-import {Offers} from '../../../types/offer';
+import {Offers, Offer} from '../../../types/offer';
 import Tabs from '../../blocks/tabs/tabs';
+import Map from '../../blocks/map/map';
+import {CITY} from '../../../mocks/offers';
 
 type MainPageProps = {
   offers: Offers;
 }
 
+
 function MainPage(props: MainPageProps):JSX.Element {
   const {offers}=props;
+  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
+
+  const onCardHover = (id: number | string) =>{
+    const currentOffer = offers.find((offer) => offer.id === id);
+
+    setSelectedOffer(currentOffer);
+  };
 
   return (
     <div className="page page--gray page--main">
       <PageHeader />
-
       <main className="page__main page__main--index">
         <h1 className="visually-hidden">Cities</h1>
         <Tabs />
@@ -38,10 +48,10 @@ function MainPage(props: MainPageProps):JSX.Element {
                   <li className="places__option" tabIndex={0}>Top rated first</li>
                 </ul>
               </form>
-              <PlacesList offers={offers}/>
+              <PlacesList offers={offers} onCardHover={onCardHover}/>
             </section>
             <div className="cities__right-section">
-              <section className="cities__map map"></section>
+              <Map city={CITY}  offers={offers} selectedOffer={selectedOffer}/>
             </div>
           </div>
         </div>

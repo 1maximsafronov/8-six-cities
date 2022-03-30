@@ -4,10 +4,11 @@ import type { Offer } from '../../../types/offer';
 
 type PlaceCardProps = {
   offer: Offer;
+  onHover: () => void;
 }
 
 function PlaceCard(props: PlaceCardProps):JSX.Element {
-  const {offer } = props;
+  const {offer, onHover } = props;
   const {isPremium, picture, price, name, type, id} = offer;
 
   const premiumMark = (
@@ -17,7 +18,7 @@ function PlaceCard(props: PlaceCardProps):JSX.Element {
   );
 
   return (
-    <article className="cities__place-card place-card">
+    <article onMouseEnter={onHover} className="cities__place-card place-card">
       {isPremium && premiumMark}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
