@@ -1,6 +1,7 @@
 import {BrowserRouter, Route,Routes} from 'react-router-dom';
 
 import { AppRoute } from '../../const';
+import { offers } from '../../mocks/offers';
 
 import MainPage from '../pages/main-page/main-page';
 import LoginPage from '../pages/login-page/login-page';
@@ -14,7 +15,7 @@ function App(): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage />}
+          element={<MainPage offers={offers}/>}
         />
         <Route
           path={AppRoute.Login}
