@@ -26,3 +26,10 @@ export const locations = [
 ];
 
 export const DEFAULT_LOCATION = 'Paris';
+
+export enum SortType  {
+  PriceLowToHigth = 'price-low-to-higth',
+  PriceHightToLow = 'price-hight-to-low',
+  TopRated = 'top-rated',
+  Popular = 'popular'
+}

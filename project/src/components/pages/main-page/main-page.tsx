@@ -8,13 +8,11 @@ import Map from '../../blocks/map/map';
 import {CITY} from '../../../mocks/offers';
 import {useAppSelector} from '../../../hooks/index';
 import { getOffersByLocation } from '../../../utils/common';
-
+import PlacesSorting from '../../blocks/places-sorting/places-sorting';
 
 function MainPage():JSX.Element {
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-
   const {currentLocation, offers} = useAppSelector((state) => state);
-
   const filteredOffers = getOffersByLocation(offers, currentLocation);
 
   const onCardHover = (id: number | string) =>{
@@ -33,21 +31,7 @@ function MainPage():JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} places to stay in {currentLocation}</b>
-              <form className="places__sorting" action="#" method="get">
-                <span className="places__sorting-caption">Sort by</span>
-                <span className="places__sorting-type" tabIndex={0}>
-                  Popular
-                  <svg className="places__sorting-arrow" width="7" height="4">
-                    <use xlinkHref="#icon-arrow-select"></use>
-                  </svg>
-                </span>
-                <ul className="places__options places__options--custom">
-                  <li className="places__option places__option--active" tabIndex={0}>Popular</li>
-                  <li className="places__option" tabIndex={0}>Price: low to high</li>
-                  <li className="places__option" tabIndex={0}>Price: high to low</li>
-                  <li className="places__option" tabIndex={0}>Top rated first</li>
-                </ul>
-              </form>
+              <PlacesSorting />
               <PlacesList offers={filteredOffers} onCardHover={onCardHover}/>
             </section>
             <div className="cities__right-section">
