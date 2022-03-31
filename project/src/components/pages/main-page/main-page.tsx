@@ -1,19 +1,25 @@
-
 import {useState} from 'react';
-import PlacesList from '../../blocks/places-list/places-list';
+
+import {Offer} from 'types/offer';
+import {CITY} from 'mocks/offers';
+import {useAppSelector} from 'hooks/index';
+
 import PageHeader from '../../blocks/page-header/page-header';
-import {Offer} from '../../../types/offer';
+import PlacesList from '../../blocks/places-list/places-list';
+import PlacesSorting from '../../blocks/places-sorting/places-sorting';
 import Tabs from '../../blocks/tabs/tabs';
 import Map from '../../blocks/map/map';
-import {CITY} from '../../../mocks/offers';
-import {useAppSelector} from '../../../hooks/index';
-import { getOffersByLocation } from '../../../utils/common';
-import PlacesSorting from '../../blocks/places-sorting/places-sorting';
+
+import { getOffersByLocation, sortOffers } from 'utils/common';
+import { SortType } from 'const';
 
 function MainPage():JSX.Element {
+  const [sortType, setSortType] = useState(SortType.Popular);
   const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
   const {currentLocation, offers} = useAppSelector((state) => state);
+
   const filteredOffers = getOffersByLocation(offers, currentLocation);
+  const sortedOffres = sortOffers(filteredOffers, sortType);
 
   const onCardHover = (id: number | string) =>{
     const currentOffer = filteredOffers.find((offer) => offer.id === id);
@@ -31,8 +37,13 @@ function MainPage():JSX.Element {
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
               <b className="places__found">{filteredOffers.length} places to stay in {currentLocation}</b>
-              <PlacesSorting />
-              <PlacesList offers={filteredOffers} onCardHover={onCardHover}/>
+              <PlacesSorting
+                onChange={(newSortType) => {
+                  setSortType(newSortType);
+                }}
+                activeType={sortType}
+              />
+              <PlacesList offers={sortedOffres} onCardHover={onCardHover}/>
             </section>
             <div className="cities__right-section">
               <Map className="cities__map"

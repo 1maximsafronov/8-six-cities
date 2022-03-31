@@ -27,7 +27,23 @@
       "react-app",
       "react-app/jest",
       "htmlacademy/react-typescript"
-    ]
+    ],
+    "settings": {
+      "import/resolver": {
+        "node": {
+          "extensions": [
+            ".js",
+            ".jsx",
+            ".ts",
+            ".tsx"
+          ],
+          "moduleDirectory": [
+            "node_modules",
+            "src/"
+          ]
+        }
+      }
+    }
   },
   "browserslist": {
     "production": [
