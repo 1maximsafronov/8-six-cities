@@ -1,14 +1,12 @@
 import {BrowserRouter, Route,Routes} from 'react-router-dom';
 
 import { AppRoute } from '../../const';
-import { offers } from '../../mocks/offers';
 
 import MainPage from '../pages/main-page/main-page';
 import LoginPage from '../pages/login-page/login-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import RoomPage from '../pages/room-page/room-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
-import {reviews} from '../../mocks/reviews';
 
 function App(): JSX.Element {
   return (
@@ -16,7 +14,7 @@ function App(): JSX.Element {
       <Routes>
         <Route
           path={AppRoute.Main}
-          element={<MainPage offers={offers}/>}
+          element={<MainPage/>}
         />
         <Route
           path={AppRoute.Login}
@@ -28,11 +26,11 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Room}
-          element={<RoomPage offers={offers} reviews={reviews}/>}
+          element={<RoomPage />}
         />
         <Route
           path={AppRoute.RoomDev}
-          element={<RoomPage offers={offers} reviews={reviews}/>}
+          element={<RoomPage />}
         />
         <Route
           path="*"

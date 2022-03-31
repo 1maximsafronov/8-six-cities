@@ -9,7 +9,7 @@ export const offers: Offers = [
     type: 'Apartment',
     picture: 'img/apartment-01.jpg',
     city: {
-      title: 'Амстердам',
+      title: 'Paris',
       lat: 52.3909553943508,
       lng: 4.85309666406198,
     },
@@ -21,7 +21,7 @@ export const offers: Offers = [
     type: 'Hostel',
     picture: 'img/apartment-02.jpg',
     city: {
-      title: 'Амстердам',
+      title: 'Amsterdam',
       lat: 52.369553943508,
       lng: 4.85309666406198,
     },
@@ -33,7 +33,7 @@ export const offers: Offers = [
     type: 'Room',
     picture: 'img/apartment-03.jpg',
     city: {
-      title: 'Амстердам',
+      title: 'Amsterdam',
       lat: 52.3909553943508,
       lng: 4.929309666406198,
     },

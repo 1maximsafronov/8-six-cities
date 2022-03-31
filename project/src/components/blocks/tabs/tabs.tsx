@@ -1,38 +1,35 @@
+import { locations } from '../../../const';
+import { useAppDispatch, useAppSelector } from '../../../hooks';
+import { changeCity } from '../../../store/action';
+import classNames from 'classnames';
+
 function Tabs():JSX.Element {
+  const dispatch = useAppDispatch();
+  const selectedLocation = useAppSelector((state) => state.currentLocation);
+
+  const onItemClick = (itemValue: string) => {
+    dispatch(changeCity(itemValue));
+  };
   return (
     <div className="tabs">
       <section className="locations container">
         <ul className="locations__list tabs__list">
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Paris</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Cologne</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Brussels</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item tabs__item--active">
-              <span>Amsterdam</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Hamburg</span>
-            </a>
-          </li>
-          <li className="locations__item">
-            <a className="locations__item-link tabs__item" href="#">
-              <span>Dusseldorf</span>
-            </a>
-          </li>
+          {locations.map((item, index) => {
+            const keyValue = `location-${item}`;
+            return (
+              <li key={keyValue} className="locations__item">
+                <a href={`#${item}`}
+                  className={classNames('locations__item-link tabs__item',
+                    {'tabs__item--active': selectedLocation === item})}
+                  onClick={(evt) => {
+                    onItemClick(item);
+                  }}
+                >
+                  <span>{item}</span>
+                </a>
+              </li>
+            );
+          })}
         </ul>
       </section>
     </div>
