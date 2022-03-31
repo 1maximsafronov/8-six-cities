@@ -1,11 +1,13 @@
-function ReviewsItem():JSX.Element {
+import {Review} from '../../../../types/reviews';
 
-  const author = {
-    name: 'Alex',
-    avatar: 'img/avatar-max.jpg',
-  };
+type ReviewItemProps ={
+  review: Review
+}
 
-  const text = 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.';
+function ReviewsItem({review}: ReviewItemProps):JSX.Element {
+  const {author, text,rating} = review;
+
+  const ratingToPercent = 20 * rating;
 
   return (
     <li className="reviews__item">
@@ -18,7 +20,7 @@ function ReviewsItem():JSX.Element {
       <div className="reviews__info">
         <div className="reviews__rating rating">
           <div className="reviews__stars rating__stars">
-            <span style={{width: '80%'}}></span>
+            <span style={{width: `${ratingToPercent}%`}}></span>
             <span className="visually-hidden">Rating</span>
           </div>
         </div>
