@@ -1,11 +1,11 @@
-import {Review} from '../../../../types/reviews';
+import {Comment} from 'types/comment';
 
 type ReviewItemProps ={
-  review: Review
+  review: Comment
 }
 
 function ReviewsItem({review}: ReviewItemProps):JSX.Element {
-  const {author, text,rating} = review;
+  const {user: author, comment:text, rating} = review;
 
   const ratingToPercent = 20 * rating;
 
@@ -13,7 +13,7 @@ function ReviewsItem({review}: ReviewItemProps):JSX.Element {
     <li className="reviews__item">
       <div className="reviews__user user">
         <div className="reviews__avatar-wrapper user__avatar-wrapper">
-          <img className="reviews__avatar user__avatar" src={author.avatar} width="54" height="54" alt="Reviews avatar" />
+          <img className="reviews__avatar user__avatar" src={author.avatarUrl} width="54" height="54" alt="Reviews avatar" />
         </div>
         <span className="reviews__user-name">{author.name}</span>
       </div>

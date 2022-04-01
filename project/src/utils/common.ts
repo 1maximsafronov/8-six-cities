@@ -1,19 +1,20 @@
-import { Offers } from '../types/offer';
+
+import { Hotels } from 'types/hotel';
 import { SortType } from '../const';
 
-export const getOffersByLocation = (offers: Offers, location: string):Offers => offers.filter((offer) => offer.city.title === location);
+export const getHotelsByLocation = (hotels: Hotels, location: string):Hotels => hotels.filter((hotel) => hotel.city.name === location);
 
-export const  sortOffers = (offers: Offers, sortType: SortType):Offers => {
+export const  sortHotels = (hotels: Hotels, sortType: SortType):Hotels => {
   switch(sortType) {
     case SortType.Popular:
-      return offers;
+      return hotels;
     case SortType.TopRated:
-      return offers;
+      return hotels;
     case SortType.PriceHightToLow:
-      return offers.sort((a, b) => b.price - a.price);
+      return hotels.sort((a, b) => b.price - a.price);
     case SortType.PriceLowToHigth:
-      return offers.sort((a, b) => a.price - b.price);
+      return hotels.sort((a, b) => a.price - b.price);
     default:
-      return offers;
+      return hotels;
   }
 };

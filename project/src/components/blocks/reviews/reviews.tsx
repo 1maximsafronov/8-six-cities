@@ -1,12 +1,12 @@
 import classNames from 'classnames';
 import ReviewsItem from './reviews-item/reviews-item';
 import ReviewForm from './review-form/review-form';
-import type {Reviews} from '../../../types/reviews';
+import {Comments} from 'types/comment';
 
 type ReviewsSectionProps = {
   className?: string;
-  reviews: Reviews;
-}
+  reviews: Comments;
+};
 
 function ReviewsSection(props: ReviewsSectionProps):JSX.Element {
   const {className, reviews} = props;

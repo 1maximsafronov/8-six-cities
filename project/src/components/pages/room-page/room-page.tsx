@@ -9,7 +9,7 @@ import {useAppSelector} from '../../../hooks/index';
 
 function RoomPage():JSX.Element {
   const {nearPlaces , currentOfferReviews: reviews} = useAppSelector((state) => state);
-  const selectedOffer = nearPlaces[0];
+  const selectedHotel = nearPlaces[0];
 
   return (
     <div className="page">
@@ -118,7 +118,11 @@ function RoomPage():JSX.Element {
               />
             </div>
           </div>
-          <Map className="property__map" city={CITY} selectedOffer={selectedOffer} offers={nearPlaces}/>
+          <Map className="property__map"
+            city={CITY}
+            selectedHotel={selectedHotel}
+            hotels={nearPlaces}
+          />
         </section>
         <div className="container">
           <NearPlaces offers={nearPlaces} />

@@ -1,13 +1,21 @@
 import { createReducer } from '@reduxjs/toolkit';
 import { changeCity, loadHotels } from './action';
 import { DEFAULT_LOCATION } from '../const';
-import { reviews } from '../mocks/reviews';
+import { Hotels } from 'types/hotel';
+import { Comments } from 'types/comment';
 
-const initialState = {
+type InitialState = {
+  currentLocation: string;
+  offers: Hotels,
+  nearPlaces: Hotels,
+  currentOfferReviews: Comments
+}
+
+const initialState:InitialState = {
   currentLocation: DEFAULT_LOCATION,
   offers: [],
   nearPlaces: [],
-  currentOfferReviews: reviews,
+  currentOfferReviews: [],
 };
 
 const reducer = createReducer(initialState, (builder) => {

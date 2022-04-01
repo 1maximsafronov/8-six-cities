@@ -1,6 +1,6 @@
 import {useState} from 'react';
 
-import {Offer} from 'types/offer';
+import { Hotel } from 'types/hotel';
 import {CITY} from 'mocks/offers';
 import {useAppSelector} from 'hooks/index';
 
@@ -10,20 +10,20 @@ import PlacesSorting from '../../blocks/places-sorting/places-sorting';
 import Tabs from '../../blocks/tabs/tabs';
 import Map from '../../blocks/map/map';
 
-import { getOffersByLocation, sortOffers } from 'utils/common';
+import { getHotelsByLocation, sortHotels } from 'utils/common';
 import { SortType } from 'const';
 
 function MainPage():JSX.Element {
   const [sortType, setSortType] = useState(SortType.Popular);
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-  const {currentLocation, offers} = useAppSelector((state) => state);
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
+  const {currentLocation, offers: hotels} = useAppSelector((state) => state);
 
-  const filteredOffers = getOffersByLocation(offers, currentLocation);
-  const sortedOffres = sortOffers(filteredOffers, sortType);
+  const filteredHotels = getHotelsByLocation(hotels, currentLocation);
+  const sortedHotels = sortHotels(filteredHotels, sortType);
 
   const onCardHover = (id: number | string) =>{
-    const currentOffer = offers.find((offer) => false);
-    setSelectedOffer(currentOffer);
+    const currentOffer = hotels.find((hotel) => false);
+    setSelectedHotel(currentOffer);
   };
 
   return (
@@ -36,19 +36,19 @@ function MainPage():JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{offers.length} places to stay in {currentLocation}</b>
+              <b className="places__found">{hotels.length} places to stay in {currentLocation}</b>
               <PlacesSorting
                 onChange={(newSortType) => {
                   setSortType(newSortType);
                 }}
                 activeType={sortType}
               />
-              <PlacesList offers={[]} onCardHover={onCardHover}/>
+              <PlacesList offers={hotels} onCardHover={onCardHover}/>
             </section>
             <div className="cities__right-section">
               <Map className="cities__map"
-                selectedOffer={selectedOffer}
-                offers={sortedOffres}
+                selectedHotel={selectedHotel}
+                hotels={sortedHotels}
                 city={CITY}
               />
             </div>
