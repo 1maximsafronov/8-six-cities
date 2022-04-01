@@ -9,7 +9,7 @@ export const  sortHotels = (hotels: Hotels, sortType: SortType):Hotels => {
     case SortType.Popular:
       return hotels;
     case SortType.TopRated:
-      return hotels;
+      return hotels.slice().sort((a,b) => b.rating - a.rating);
     case SortType.PriceHightToLow:
       return hotels.slice().sort((a, b) => b.price - a.price);
     case SortType.PriceLowToHigth:
