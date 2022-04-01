@@ -1,8 +1,9 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadCurrentHotel, loadHotels } from './action';
+import { changeCity, loadCurrentHotel, loadHotels, satUserData } from './action';
 import { DEFAULT_LOCATION } from '../const';
 import { Hotels, Hotel } from 'types/hotel';
 import { Comments } from 'types/comment';
+import { AuthData } from 'types/user';
 
 type InitialState = {
   currentLocation: string;
@@ -11,6 +12,7 @@ type InitialState = {
   nearPlaces: Hotels,
   currentOfferReviews: Comments;
   isDataLoaded: boolean;
+  userData: AuthData | null;
 }
 
 const initialState:InitialState = {
@@ -20,6 +22,7 @@ const initialState:InitialState = {
   currentHotel: null,
   currentOfferReviews: [],
   isDataLoaded: false,
+  userData: null,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -33,6 +36,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadCurrentHotel, (state, action) => {
       state.currentHotel = action.payload;
+    })
+    .addCase(satUserData, (state, action) => {
+      state.userData = action.payload;
     });
 });
 
