@@ -1,17 +1,18 @@
+import { useAppDispatch } from 'hooks';
 import { ChangeEvent, FormEvent, useState } from 'react';
-import { LoginData } from 'types/user';
+import { loginAction } from 'store/api-actions';
 
-
-function LoginForm({onSubmit}:LoginFormProps):JSX.Element {
+function LoginForm():JSX.Element {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const dispatch = useAppDispatch();
 
   const onEmailChange = (evt: ChangeEvent<HTMLInputElement>) => setEmail(evt.target.value);
   const onPassChange = (evt: ChangeEvent<HTMLInputElement>) => setPassword(evt.target.value);
 
   const submitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit({email,password});
+    dispatch(loginAction({email,password}));
   };
 
   return (
@@ -45,9 +46,5 @@ function LoginForm({onSubmit}:LoginFormProps):JSX.Element {
     </section>
   );
 }
-
-type LoginFormProps = {
-  onSubmit: (loginData: LoginData) => void;
-};
 
 export default LoginForm;

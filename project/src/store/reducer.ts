@@ -1,6 +1,6 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadCurrentHotel, loadHotels, satUserData } from './action';
-import { DEFAULT_LOCATION } from '../const';
+import { changeCity, loadCurrentHotel, loadHotels, requireAuthorization, satUserData } from './action';
+import { AuthorizationStatus, DEFAULT_LOCATION } from '../const';
 import { Hotels, Hotel } from 'types/hotel';
 import { Comments } from 'types/comment';
 import { AuthData } from 'types/user';
@@ -13,6 +13,7 @@ type InitialState = {
   currentOfferReviews: Comments;
   isDataLoaded: boolean;
   userData: AuthData | null;
+  authorizationStatus: AuthorizationStatus
 }
 
 const initialState:InitialState = {
@@ -23,6 +24,7 @@ const initialState:InitialState = {
   currentOfferReviews: [],
   isDataLoaded: false,
   userData: null,
+  authorizationStatus: AuthorizationStatus.Unknown,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -39,6 +41,9 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(satUserData, (state, action) => {
       state.userData = action.payload;
+    })
+    .addCase(requireAuthorization, (state, action) => {
+      state.authorizationStatus = action.payload;
     });
 });
 
