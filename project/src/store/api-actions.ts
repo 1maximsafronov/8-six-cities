@@ -1,8 +1,8 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, store } from 'store';
-import { loadHotels, loadCurrentHotel,satUserData, requireAuthorization, loadNearbyHotels, loadHotelComments } from './action';
+import { loadHotels, loadCurrentHotel,satUserData, requireAuthorization, loadNearbyHotels, loadHotelComments, redirectToRoute } from './action';
 import {LoginData} from 'types/user';
-import { AuthorizationStatus, APIRoute } from 'const';
+import { AuthorizationStatus, APIRoute, AppRoute } from 'const';
 import { dropToken, saveToken } from 'services/token';
 
 export const fetchHotels = createAsyncThunk('data/fetchHotels',
@@ -55,6 +55,7 @@ export const loginAction = createAsyncThunk('user/login',
     saveToken(data.token);
     store.dispatch(satUserData(data));
     store.dispatch(requireAuthorization(AuthorizationStatus.Auth));
+    store.dispatch(redirectToRoute(AppRoute.Main));
   },
 );
 
@@ -64,5 +65,6 @@ export const logoutAction = createAsyncThunk('user/logout',
     dropToken();
     store.dispatch(satUserData(null));
     store.dispatch(requireAuthorization(AuthorizationStatus.NoAuth));
+    store.dispatch(redirectToRoute(AppRoute.Main));
   },
 );

@@ -13,3 +13,4 @@ export const satUserData = createAction<AuthData | null>('uder/setUserData');
 export const requireAuthorization = createAction<AuthorizationStatus>('user/requireAuthorization');
 export const loadNearbyHotels = createAction<Hotels>('data/loadNearbyHotels');
 export const loadHotelComments = createAction<Comments>('data/loadHotelComments');
+export const redirectToRoute = createAction<string>('app/redirectToRoute');
