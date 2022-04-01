@@ -6,6 +6,15 @@ export enum AppRoute {
   Favorites = '/favorites',
 }
 
+export enum APIRoute {
+  Hotels = '/hotels',
+  Favorite = '/favorite',
+  Comments = '/comments',
+  Login = '/login',
+  Logout = '/logout',
+  Nearby = '/nearby',
+}
+
 
 export enum AuthorizationStatus {
   Auth = 'AUTH',

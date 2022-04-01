@@ -1,16 +1,18 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadCurrentHotel, loadHotels, requireAuthorization, satUserData } from './action';
+import { changeCity, loadCurrentHotel, loadHotelComments, loadHotels, loadNearbyHotels, requireAuthorization, satUserData } from './action';
 import { AuthorizationStatus, DEFAULT_LOCATION } from '../const';
 import { Hotels, Hotel } from 'types/hotel';
 import { Comments } from 'types/comment';
 import { AuthData } from 'types/user';
 
 type InitialState = {
-  currentLocation: string;
   hotels: Hotels,
+  currentLocation: string;
   currentHotel: Hotel | null;
-  nearPlaces: Hotels,
-  currentOfferReviews: Comments;
+  nearbyHotels: Hotels,
+  isNearbyLoaded: boolean;
+  currentHotelrReviews: Comments;
+  isReviewsLoaded: boolean;
   isDataLoaded: boolean;
   userData: AuthData | null;
   authorizationStatus: AuthorizationStatus
@@ -19,9 +21,11 @@ type InitialState = {
 const initialState:InitialState = {
   currentLocation: DEFAULT_LOCATION,
   hotels: [],
-  nearPlaces: [],
+  nearbyHotels: [],
+  isNearbyLoaded: false,
   currentHotel: null,
-  currentOfferReviews: [],
+  currentHotelrReviews: [],
+  isReviewsLoaded: false,
   isDataLoaded: false,
   userData: null,
   authorizationStatus: AuthorizationStatus.Unknown,
@@ -44,6 +48,12 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(requireAuthorization, (state, action) => {
       state.authorizationStatus = action.payload;
+    })
+    .addCase(loadNearbyHotels, (state, action) => {
+      state.nearbyHotels = action.payload;
+    })
+    .addCase(loadHotelComments, (state, action) => {
+      state.currentHotelrReviews = action.payload;
     });
 });
 

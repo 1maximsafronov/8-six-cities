@@ -14,16 +14,19 @@ import ReviewsSection from 'components/blocks/reviews/reviews';
 import {useAppSelector, useAppDispatch} from 'hooks/index';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import {fetchOneHotel} from 'store/api-actions';
+import {fetchHotelComments, fetchNearbyHotels, fetchOneHotel} from 'store/api-actions';
 
 
 function RoomPage():JSX.Element {
-  const {nearPlaces ,currentHotel, currentOfferReviews: reviews} = useAppSelector((state) => state);
+  const {nearbyHotels ,currentHotel, currentHotelrReviews: reviews} = useAppSelector((state) => state);
+
   const dispatch = useAppDispatch();
   const {id} = useParams();
 
   useEffect(() => {
     dispatch(fetchOneHotel(id));
+    dispatch(fetchHotelComments(id));
+    dispatch(fetchNearbyHotels(id));
   }, [id]);
 
   if (currentHotel === null) {
@@ -83,12 +86,12 @@ function RoomPage():JSX.Element {
           </div>
           <Map className="property__map"
             selectedHotel={currentHotel}
-            hotels={nearPlaces}
+            hotels={nearbyHotels}
             city={city}
           />
         </section>
         <div className="container">
-          <NearPlaces offers={nearPlaces} />
+          <NearPlaces hotels={nearbyHotels} />
         </div>
       </main>
     </div>
