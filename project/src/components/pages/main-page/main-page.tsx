@@ -22,7 +22,7 @@ function MainPage():JSX.Element {
   const sortedOffres = sortOffers(filteredOffers, sortType);
 
   const onCardHover = (id: number | string) =>{
-    const currentOffer = filteredOffers.find((offer) => offer.id === id);
+    const currentOffer = offers.find((offer) => false);
     setSelectedOffer(currentOffer);
   };
 
@@ -36,19 +36,19 @@ function MainPage():JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffers.length} places to stay in {currentLocation}</b>
+              <b className="places__found">{offers.length} places to stay in {currentLocation}</b>
               <PlacesSorting
                 onChange={(newSortType) => {
                   setSortType(newSortType);
                 }}
                 activeType={sortType}
               />
-              <PlacesList offers={sortedOffres} onCardHover={onCardHover}/>
+              <PlacesList offers={[]} onCardHover={onCardHover}/>
             </section>
             <div className="cities__right-section">
               <Map className="cities__map"
                 selectedOffer={selectedOffer}
-                offers={filteredOffers}
+                offers={sortedOffres}
                 city={CITY}
               />
             </div>
