@@ -1,7 +1,5 @@
 import {useState} from 'react';
-
-import { Hotel } from 'types/hotel';
-import {CITY} from 'mocks/offers';
+import type { Hotel} from 'types/hotel';
 import {useAppSelector} from 'hooks/index';
 
 import PageHeader from '../../blocks/page-header/page-header';
@@ -16,7 +14,11 @@ import { SortType } from 'const';
 function MainPage():JSX.Element {
   const [sortType, setSortType] = useState(SortType.Popular);
   const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
-  const {currentLocation, offers: hotels} = useAppSelector((state) => state);
+  const {currentLocation, hotels, isDataLoaded} = useAppSelector((state) => state);
+
+  if (!isDataLoaded) {
+    return <p>Loading...</p>;
+  }
 
   const filteredHotels = getHotelsByLocation(hotels, currentLocation);
   const sortedHotels = sortHotels(filteredHotels, sortType);
@@ -25,6 +27,9 @@ function MainPage():JSX.Element {
     const currentOffer = hotels.find((hotel) => false);
     setSelectedHotel(currentOffer);
   };
+
+  const currentCity = filteredHotels[0].city;
+  const hotelsCount = sortedHotels.length;
 
   return (
     <div className="page page--gray page--main">
@@ -36,20 +41,20 @@ function MainPage():JSX.Element {
           <div className="cities__places-container container">
             <section className="cities__places places">
               <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{hotels.length} places to stay in {currentLocation}</b>
+              <b className="places__found">{hotelsCount} places to stay in {currentLocation}</b>
               <PlacesSorting
                 onChange={(newSortType) => {
                   setSortType(newSortType);
                 }}
                 activeType={sortType}
               />
-              <PlacesList offers={hotels} onCardHover={onCardHover}/>
+              <PlacesList offers={sortedHotels} onCardHover={onCardHover}/>
             </section>
             <div className="cities__right-section">
               <Map className="cities__map"
                 selectedHotel={selectedHotel}
-                hotels={sortedHotels}
-                city={CITY}
+                hotels={filteredHotels}
+                city={currentCity}
               />
             </div>
           </div>

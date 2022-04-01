@@ -1,8 +1,7 @@
 import {useRef, useEffect} from 'react';
 import {Icon, Marker} from 'leaflet';
-import useMap from '../../../hooks/useMap';
-import {City} from '../../../types/offer';
-import { Hotels , Hotel} from 'types/hotel';
+import useMap from 'hooks/useMap';
+import { Hotels , Hotel, City} from 'types/hotel';
 import {URL_MARKER_DEFAULT, URL_MARKER_CURRENT} from '../../../const';
 import 'leaflet/dist/leaflet.css';
 import classnames from 'classnames';

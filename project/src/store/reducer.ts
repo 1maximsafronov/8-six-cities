@@ -6,16 +6,18 @@ import { Comments } from 'types/comment';
 
 type InitialState = {
   currentLocation: string;
-  offers: Hotels,
+  hotels: Hotels,
   nearPlaces: Hotels,
   currentOfferReviews: Comments
+  isDataLoaded: boolean;
 }
 
 const initialState:InitialState = {
   currentLocation: DEFAULT_LOCATION,
-  offers: [],
+  hotels: [],
   nearPlaces: [],
   currentOfferReviews: [],
+  isDataLoaded: false,
 };
 
 const reducer = createReducer(initialState, (builder) => {
@@ -24,7 +26,8 @@ const reducer = createReducer(initialState, (builder) => {
       state.currentLocation = action.payload;
     })
     .addCase(loadHotels, (state, action) => {
-      state.offers = action.payload;
+      state.hotels = action.payload;
+      state.isDataLoaded = action.payload;
     });
 });
 

@@ -4,12 +4,12 @@ import PageHeader from '../../blocks/page-header/page-header';
 import ReviewsSection from '../../blocks/reviews/reviews';
 import PropertyGallery from '../../blocks/property/property-gallery/property-gallery';
 
-import {CITY} from '../../../mocks/offers';
-import {useAppSelector} from '../../../hooks/index';
+import {useAppSelector} from 'hooks/index';
 
 function RoomPage():JSX.Element {
   const {nearPlaces , currentOfferReviews: reviews} = useAppSelector((state) => state);
   const selectedHotel = nearPlaces[0];
+  const currentCity = selectedHotel.city;
 
   return (
     <div className="page">
@@ -119,7 +119,7 @@ function RoomPage():JSX.Element {
             </div>
           </div>
           <Map className="property__map"
-            city={CITY}
+            city={currentCity}
             selectedHotel={selectedHotel}
             hotels={nearPlaces}
           />
