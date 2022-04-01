@@ -48,7 +48,7 @@ function Map(props: MapProps): JSX.Element {
         marker.setIcon(icon).addTo(map);
       });
     }
-  }, [map, hotels, selectedHotel]);
+  }, [map, hotels, selectedHotel,city]);
 
   return <section ref={mapRef} className={classnames('map', className)} />;
 }
