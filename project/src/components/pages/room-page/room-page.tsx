@@ -1,15 +1,51 @@
-import Map from '../../blocks/map/map';
-import NearPlaces from '../../blocks/near-places/near-places';
-import PageHeader from '../../blocks/page-header/page-header';
-import ReviewsSection from '../../blocks/reviews/reviews';
-import PropertyGallery from '../../blocks/property/property-gallery/property-gallery';
+import Map from 'components/blocks/map/map';
+import Host from 'components/blocks/property/host/host';
+import Price from 'components/blocks/property/price/price';
+import Inside from 'components/blocks/property/inside/inside';
+import Rating from 'components/blocks/property/rating/rating';
+import Gallery from 'components/blocks/property/gallery/gallery';
+import Features from 'components/blocks/property/features/features';
+import NearPlaces from 'components/blocks/near-places/near-places';
+import PageHeader from 'components/blocks/page-header/page-header';
+import BookmarkBtn from 'components/blocks/property/bookmark-btn/bookmark-btn';
+import PremiumMark from 'components/blocks/property/premium-mark/premium-mark';
+import ReviewsSection from 'components/blocks/reviews/reviews';
 
-import {useAppSelector} from 'hooks/index';
+import {useAppSelector, useAppDispatch} from 'hooks/index';
+import { useEffect } from 'react';
+import { useParams } from 'react-router-dom';
+import {fetchOneHotel} from 'store/api-actions';
+
 
 function RoomPage():JSX.Element {
-  const {nearPlaces , currentOfferReviews: reviews} = useAppSelector((state) => state);
-  const selectedHotel = nearPlaces[0];
-  const currentCity = selectedHotel.city;
+  const {nearPlaces ,currentHotel, currentOfferReviews: reviews} = useAppSelector((state) => state);
+  const dispatch = useAppDispatch();
+  const {id} = useParams();
+
+  useEffect(() => {
+    dispatch(fetchOneHotel(id));
+  }, [id]);
+
+  if (currentHotel === null) {
+    return <p>Loading...</p>;
+  }
+
+  const {
+    city,
+    host,
+    type,
+    price,
+    goods,
+    title,
+    images,
+    rating,
+    bedrooms,
+    maxAdults,
+    isPremium,
+    description,
+    isFavorite,
+  } = currentHotel;
+
 
   return (
     <div className="page">
@@ -17,111 +53,38 @@ function RoomPage():JSX.Element {
 
       <main className="page__main page__main--property">
         <section className="property">
-          <PropertyGallery />
+          <Gallery images={images}/>
           <div className="property__container container">
             <div className="property__wrapper">
-              <div className="property__mark">
-                <span>Premium</span>
-              </div>
+              {isPremium && <PremiumMark />}
               <div className="property__name-wrapper">
                 <h1 className="property__name">
-                  Beautiful &amp; luxurious studio at great location
+                  {title}
                 </h1>
-                <button className="property__bookmark-button button" type="button">
-                  <svg className="property__bookmark-icon" width="31" height="33">
-                    <use xlinkHref="#icon-bookmark"></use>
-                  </svg>
-                  <span className="visually-hidden">To bookmarks</span>
-                </button>
+                <BookmarkBtn isActive={isFavorite}/>
               </div>
-              <div className="property__rating rating">
-                <div className="property__stars rating__stars">
-                  <span style={{width: '80%'}}></span>
-                  <span className="visually-hidden">Rating</span>
-                </div>
-                <span className="property__rating-value rating__value">4.8</span>
-              </div>
-              <ul className="property__features">
-                <li className="property__feature property__feature--entire">
-                  Apartment
-                </li>
-                <li className="property__feature property__feature--bedrooms">
-                  3 Bedrooms
-                </li>
-                <li className="property__feature property__feature--adults">
-                  Max 4 adults
-                </li>
-              </ul>
-              <div className="property__price">
-                <b className="property__price-value">&euro;120</b>
-                <span className="property__price-text">&nbsp;night</span>
-              </div>
-              <div className="property__inside">
-                <h2 className="property__inside-title">What&apos;s inside</h2>
-                <ul className="property__inside-list">
-                  <li className="property__inside-item">
-                    Wi-Fi
-                  </li>
-                  <li className="property__inside-item">
-                    Washing machine
-                  </li>
-                  <li className="property__inside-item">
-                    Towels
-                  </li>
-                  <li className="property__inside-item">
-                    Heating
-                  </li>
-                  <li className="property__inside-item">
-                    Coffee machine
-                  </li>
-                  <li className="property__inside-item">
-                    Baby seat
-                  </li>
-                  <li className="property__inside-item">
-                    Kitchen
-                  </li>
-                  <li className="property__inside-item">
-                    Dishwasher
-                  </li>
-                  <li className="property__inside-item">
-                    Cabel TV
-                  </li>
-                  <li className="property__inside-item">
-                    Fridge
-                  </li>
-                </ul>
-              </div>
-              <div className="property__host">
-                <h2 className="property__host-title">Meet the host</h2>
-                <div className="property__host-user user">
-                  <div className="property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper">
-                    <img className="property__avatar user__avatar" src="img/avatar-angelina.jpg" width="74" height="74" alt="Host avatar" />
-                  </div>
-                  <span className="property__user-name">
-                    Angelina
-                  </span>
-                  <span className="property__user-status">
-                    Pro
-                  </span>
-                </div>
+              <Rating value={rating}/>
+              <Features
+                maxAdults={maxAdults}
+                bedrooms={bedrooms}
+                type={type}
+              />
+              <Price value={price}/>
+              <Inside goods={goods}/>
+              <Host host={host}>
                 <div className="property__description">
                   <p className="property__text">
-                    A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.
-                  </p>
-                  <p className="property__text">
-                    An independent House, strategically located between Rembrand Square and National Opera, but where the bustle of the city comes to rest in this alley flowery and colorful.
+                    {description}
                   </p>
                 </div>
-              </div>
-              <ReviewsSection className='property__reviews'
-                reviews={reviews}
-              />
+              </Host>
+              <ReviewsSection className='property__reviews' reviews={reviews}/>
             </div>
           </div>
           <Map className="property__map"
-            city={currentCity}
-            selectedHotel={selectedHotel}
+            selectedHotel={currentHotel}
             hotels={nearPlaces}
+            city={city}
           />
         </section>
         <div className="container">

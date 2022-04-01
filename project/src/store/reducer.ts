@@ -1,14 +1,15 @@
 import { createReducer } from '@reduxjs/toolkit';
-import { changeCity, loadHotels } from './action';
+import { changeCity, loadCurrentHotel, loadHotels } from './action';
 import { DEFAULT_LOCATION } from '../const';
-import { Hotels } from 'types/hotel';
+import { Hotels, Hotel } from 'types/hotel';
 import { Comments } from 'types/comment';
 
 type InitialState = {
   currentLocation: string;
   hotels: Hotels,
+  currentHotel: Hotel | null;
   nearPlaces: Hotels,
-  currentOfferReviews: Comments
+  currentOfferReviews: Comments;
   isDataLoaded: boolean;
 }
 
@@ -16,6 +17,7 @@ const initialState:InitialState = {
   currentLocation: DEFAULT_LOCATION,
   hotels: [],
   nearPlaces: [],
+  currentHotel: null,
   currentOfferReviews: [],
   isDataLoaded: false,
 };
@@ -27,7 +29,10 @@ const reducer = createReducer(initialState, (builder) => {
     })
     .addCase(loadHotels, (state, action) => {
       state.hotels = action.payload;
-      state.isDataLoaded = action.payload;
+      state.isDataLoaded = true;
+    })
+    .addCase(loadCurrentHotel, (state, action) => {
+      state.currentHotel = action.payload;
     });
 });
 
