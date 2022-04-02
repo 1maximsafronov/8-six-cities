@@ -10,9 +10,14 @@ import ReviewsSection from '../reviews/reviews';
 import Map from '../map/map';
 import { Hotel, Hotels } from 'types/hotel';
 import { Comments } from 'types/comment';
+import { useAppDispatch } from 'hooks';
+import { sendNewComment } from 'store/api-actions';
 
 function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
+  const dispatch = useAppDispatch();
+
   const {
+    id,
     city,
     host,
     type,
@@ -27,6 +32,16 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
     description,
     isFavorite,
   } = hotel;
+
+  const onReviewSend = (text: string, commentRating: number) => {
+    dispatch(sendNewComment({
+      id: id,
+      newComment: {
+        comment: text,
+        rating: commentRating,
+      },
+    }));
+  };
 
   return (
     <section className="property">
@@ -56,7 +71,10 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
               </p>
             </div>
           </Host>
-          <ReviewsSection className='property__reviews' reviews={reviews}/>
+          <ReviewsSection className='property__reviews'
+            reviews={reviews}
+            onNewReviewSubmit={onReviewSend}
+          />
         </div>
       </div>
       <Map className="property__map"

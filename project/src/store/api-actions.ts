@@ -5,6 +5,7 @@ import {LoginData} from 'types/user';
 import { AuthorizationStatus, APIRoute, AppRoute } from 'const';
 import { dropToken, saveToken } from 'services/token';
 import { Hotel, Hotels } from 'types/hotel';
+import { CommentNew } from 'types/comment';
 
 export const fetchHotels = createAsyncThunk('data/fetchHotels',
   async () => {
@@ -30,6 +31,13 @@ export const fetchNearbyHotels = createAsyncThunk('data/fetchNearbyHotels',
 export const fetchHotelComments = createAsyncThunk('data/fetchHotelComments',
   async (id:string | number | undefined) => {
     const {data} =  await api.get(`${APIRoute.Comments}/${id}`);
+    store.dispatch(loadHotelComments(data));
+  },
+);
+
+export const sendNewComment = createAsyncThunk('user/sendNewComment',
+  async ({id, newComment}:{id: number | string; newComment: CommentNew;}) => {
+    const {data} = await api.post(`${APIRoute.Comments}/${id}`,newComment);
     store.dispatch(loadHotelComments(data));
   },
 );

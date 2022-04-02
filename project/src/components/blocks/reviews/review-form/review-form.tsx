@@ -11,14 +11,16 @@ function ReviewForm(props: ReviewFormProps):JSX.Element {
   const [text, setText] = useState('');
 
   const handleRatingChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(target.value, 10);
+    const value = Number(target.value);
     setRating(value);
   };
 
 
   const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit(text, rating);
+    if (text.length >= 50 && rating !== 0) {
+      onSubmit(text, rating);
+    }
   };
 
 

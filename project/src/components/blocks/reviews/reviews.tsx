@@ -8,10 +8,11 @@ import { isUserAuthorized } from 'store/selectors';
 type ReviewsSectionProps = {
   className?: string;
   reviews: Comments;
+  onNewReviewSubmit: (text: string, rating: number) => void
 };
 
 function ReviewsSection(props: ReviewsSectionProps):JSX.Element {
-  const {className, reviews} = props;
+  const {className, reviews, onNewReviewSubmit} = props;
   const isAuth = useAppSelector(isUserAuthorized);
   const reviewsCount = reviews.length;
   const reviewsClassName = classNames('reviews', className);
@@ -29,9 +30,7 @@ function ReviewsSection(props: ReviewsSectionProps):JSX.Element {
       </ul>
       {isAuth && (
         <ReviewForm
-          onSubmit={(text, rating) => {
-            //
-          }}
+          onSubmit={onNewReviewSubmit}
         />
       )}
 
