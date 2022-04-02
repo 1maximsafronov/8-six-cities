@@ -1,30 +1,25 @@
 import {useState} from 'react';
-
-import {Offer} from 'types/offer';
-import {CITY} from 'mocks/offers';
+import type { Hotel} from 'types/hotel';
 import {useAppSelector} from 'hooks/index';
 
 import PageHeader from '../../blocks/page-header/page-header';
-import PlacesList from '../../blocks/places-list/places-list';
-import PlacesSorting from '../../blocks/places-sorting/places-sorting';
 import Tabs from '../../blocks/tabs/tabs';
 import Map from '../../blocks/map/map';
+import Places from '../../blocks/places/places';
 
-import { getOffersByLocation, sortOffers } from 'utils/common';
-import { SortType } from 'const';
+import {getCurrentLocation, getHotelsByLocation, getLoadDataStatus} from 'store/selectors';
 
 function MainPage():JSX.Element {
-  const [sortType, setSortType] = useState(SortType.Popular);
-  const [selectedOffer, setSelectedOffer] = useState<Offer | undefined>(undefined);
-  const {currentLocation, offers} = useAppSelector((state) => state);
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
+  const currentLocation = useAppSelector(getCurrentLocation);
+  const isDataLoaded = useAppSelector(getLoadDataStatus);
+  const hotels = useAppSelector(getHotelsByLocation);
 
-  const filteredOffers = getOffersByLocation(offers, currentLocation);
-  const sortedOffres = sortOffers(filteredOffers, sortType);
+  if (!isDataLoaded) {
+    return <p>Loading...</p>;
+  }
 
-  const onCardHover = (id: number | string) =>{
-    const currentOffer = filteredOffers.find((offer) => offer.id === id);
-    setSelectedOffer(currentOffer);
-  };
+  const currentCity = hotels[0].city;
 
   return (
     <div className="page page--gray page--main">
@@ -34,22 +29,19 @@ function MainPage():JSX.Element {
         <Tabs />
         <div className="cities">
           <div className="cities__places-container container">
-            <section className="cities__places places">
-              <h2 className="visually-hidden">Places</h2>
-              <b className="places__found">{filteredOffers.length} places to stay in {currentLocation}</b>
-              <PlacesSorting
-                onChange={(newSortType) => {
-                  setSortType(newSortType);
-                }}
-                activeType={sortType}
-              />
-              <PlacesList offers={sortedOffres} onCardHover={onCardHover}/>
-            </section>
+            <Places
+              hotels={hotels}
+              location={currentLocation}
+              onCardHover={
+                (hotel: Hotel | undefined) =>
+                  setSelectedHotel(hotel)
+              }
+            />
             <div className="cities__right-section">
               <Map className="cities__map"
-                selectedOffer={selectedOffer}
-                offers={filteredOffers}
-                city={CITY}
+                selectedHotel={selectedHotel}
+                hotels={hotels}
+                city={currentCity}
               />
             </div>
           </div>

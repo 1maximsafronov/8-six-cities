@@ -1,6 +1,7 @@
-import {BrowserRouter, Route,Routes} from 'react-router-dom';
-
+import {Route,Routes} from 'react-router-dom';
+import browserHistory from 'browse-history';
 import { AppRoute } from '../../const';
+import HistoryRouter from 'components/history-router/history-router';
 
 import MainPage from '../pages/main-page/main-page';
 import LoginPage from '../pages/login-page/login-page';
@@ -10,7 +11,7 @@ import NotFoundPage from '../pages/not-found-page/not-found-page';
 
 function App(): JSX.Element {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={browserHistory}>
       <Routes>
         <Route
           path={AppRoute.Main}
@@ -37,7 +38,7 @@ function App(): JSX.Element {
           element={<NotFoundPage />}
         />
       </Routes>
-    </BrowserRouter>
+    </HistoryRouter>
 
   );
 }

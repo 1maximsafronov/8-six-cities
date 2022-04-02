@@ -1,21 +1,21 @@
-import { Offers } from '../../../../types/offer';
+import { Hotels } from 'types/hotel';
 import NearPlacesItem from '../item/item';
 
-type NearPlacesProps = {
-  offers: Offers;
-}
-
-function NearPlacesList({offers}:NearPlacesProps):JSX.Element {
+function NearPlacesList({hotels}:NearPlacesProps):JSX.Element {
   return (
     <div className="near-places__list places__list">
-      {offers.map((_item, index) => {
-        const keyValue = `offer-${index}`;
+      {hotels.map((hotel) => {
+        const keyValue = `hotel-${hotel.id}`;
 
-        return <NearPlacesItem key={keyValue}/>;
+        return <NearPlacesItem hotel={hotel} key={keyValue}/>;
       })}
 
     </div>
   );
 }
+
+type NearPlacesProps = {
+  hotels: Hotels;
+};
 
 export default NearPlacesList;

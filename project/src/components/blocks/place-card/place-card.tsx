@@ -1,15 +1,14 @@
 import { Link } from 'react-router-dom';
 
-import type { Offer } from '../../../types/offer';
+import type { Hotel } from 'types/hotel';
 
 type PlaceCardProps = {
-  offer: Offer;
+  hotel: Hotel;
   onHover: () => void;
 }
 
-function PlaceCard(props: PlaceCardProps):JSX.Element {
-  const {offer, onHover } = props;
-  const {isPremium, picture, price, name, type, id} = offer;
+function PlaceCard({hotel, onHover }: PlaceCardProps):JSX.Element {
+  const {isPremium, previewImage, price, title, type, id} = hotel;
 
   const premiumMark = (
     <div className="place-card__mark">
@@ -22,7 +21,7 @@ function PlaceCard(props: PlaceCardProps):JSX.Element {
       {isPremium && premiumMark}
       <div className="cities__image-wrapper place-card__image-wrapper">
         <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={picture} width="260" height="200" alt="Place image" />
+          <img className="place-card__image" src={previewImage} width="260" height="200" alt={`Place ${title}`} />
         </Link>
       </div>
       <div className="place-card__info">
@@ -45,7 +44,7 @@ function PlaceCard(props: PlaceCardProps):JSX.Element {
           </div>
         </div>
         <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{name}</Link>
+          <Link to={`/offer/${id}`}>{title}</Link>
         </h2>
         <p className="place-card__type">{type}</p>
       </div>

@@ -1,17 +1,20 @@
 import classNames from 'classnames';
 import ReviewsItem from './reviews-item/reviews-item';
 import ReviewForm from './review-form/review-form';
-import type {Reviews} from '../../../types/reviews';
+import {Comments} from 'types/comment';
+import { useAppSelector } from 'hooks';
+import { AuthorizationStatus } from 'const';
 
 type ReviewsSectionProps = {
   className?: string;
-  reviews: Reviews;
-}
+  reviews: Comments;
+};
 
 function ReviewsSection(props: ReviewsSectionProps):JSX.Element {
   const {className, reviews} = props;
   const reviewsClassName = classNames('reviews', className);
-
+  const authStatus = useAppSelector((state) => state.authorizationStatus);
+  const isAuth = authStatus === AuthorizationStatus.Auth;
   const reviewsCount = reviews.length;
 
   return (
@@ -25,11 +28,14 @@ function ReviewsSection(props: ReviewsSectionProps):JSX.Element {
           />
         ))}
       </ul>
-      <ReviewForm
-        onSubmit={(text, rating) => {
-        //
-        }}
-      />
+      {isAuth && (
+        <ReviewForm
+          onSubmit={(text, rating) => {
+            //
+          }}
+        />
+      )}
+
     </section>
   );
 }

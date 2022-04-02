@@ -1,9 +1,9 @@
 import PlaceCard from '../place-card/place-card';
-import {Offers} from '../../../types/offer';
+import {Hotels} from 'types/hotel';
 
 
 type PlacesListProps = {
-  offers: Offers;
+  offers: Hotels;
   onCardHover: (id: number | string) => void
 }
 
@@ -12,15 +12,18 @@ function PlacesList(props: PlacesListProps):JSX.Element {
 
   return (
     <div className="cities__places-list places__list tabs__content">
-      {offers.map((offer) => (
-        <PlaceCard
-          onHover={() => {
-            onCardHover(offer.id);
-          }}
-          key={`${offer.name}`}
-          offer={offer}
-        />
-      ))}
+      {offers.map((hotel) => {
+        const keyValue = `hotel-${hotel.id}`;
+        return(
+          <PlaceCard
+            key={keyValue}
+            onHover={() => {
+              onCardHover(hotel.id);
+            }}
+            hotel={hotel}
+          />
+        );
+      })}
     </div>
   );
 }

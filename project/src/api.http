@@ -1,0 +1,46 @@
+
+
+# Заспрос списка отелей
+GET https://9.react.pages.academy/six-cities/hotels
+
+###
+
+# Запрос данных одного отеля
+GET https://9.react.pages.academy/six-cities/hotels/1
+
+###
+
+# Запрос списка ближайших отелей к текущему
+GET https://9.react.pages.academy/six-cities/hotels/1/nearby
+
+###
+
+GET https://9.react.pages.academy/six-cities/favorite
+x-token: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+
+###
+
+POST https://9.react.pages.academy/six-cities/favorite/1/0
+
+###
+
+GET https://9.react.pages.academy/six-cities/comments/1
+
+###
+
+POST https://9.react.pages.academy/six-cities/login
+Content-Type: application/json
+
+{
+	"email": "Oliver.conner@gmail.com",
+	"password": "12345678"
+}
+
+###
+
+GET https://9.react.pages.academy/six-cities/login
+x-token: T2xpdmVyLmNvbm5lckBnbWFpbC5jb20=
+
+###
+
+DELETE https://9.react.pages.academy/six-cities/logout

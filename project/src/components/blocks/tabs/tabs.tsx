@@ -22,6 +22,7 @@ function Tabs():JSX.Element {
                   className={classNames('locations__item-link tabs__item',
                     {'tabs__item--active': selectedLocation === item})}
                   onClick={(evt) => {
+                    evt.preventDefault();
                     onItemClick(item);
                   }}
                 >
