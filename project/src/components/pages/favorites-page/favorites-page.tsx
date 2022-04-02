@@ -1,4 +1,5 @@
 import PageHeader from '../../blocks/page-header/page-header';
+import PageFooter from 'components/blocks/page-footer/page-footer';
 
 function FavoritesPage():JSX.Element {
   return (
@@ -131,11 +132,8 @@ function FavoritesPage():JSX.Element {
           </section>
         </div>
       </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
-      </footer>
+
+      <PageFooter />
     </div>
   );
 }
