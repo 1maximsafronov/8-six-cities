@@ -11,11 +11,7 @@ function MainPage():JSX.Element {
   const isDataLoaded = useAppSelector(getLoadDataStatus);
   const hotels = useAppSelector(getHotelsByLocation);
 
-  const isEmptyPage = false;
-
-  if (!isDataLoaded) {
-    return <p>Loading...</p>;
-  }
+  const isEmptyPage = !isDataLoaded || !hotels || hotels.length <= 0;
 
   const pageMainClassName = classNames(
     'page__main page__main--index',
@@ -31,8 +27,9 @@ function MainPage():JSX.Element {
         <Tabs />
 
         <CitiesSection
-          hotels={hotels}
+          isLoading={!isDataLoaded}
           isEmpty={isEmptyPage}
+          hotels={hotels}
           currentLocation={currentLocation}
         />
       </main>
