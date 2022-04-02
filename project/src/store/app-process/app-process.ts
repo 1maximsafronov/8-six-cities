@@ -1,7 +1,7 @@
 import { Hotels, Hotel } from 'types/hotel';
 import { Comments } from 'types/comment';
 import { createReducer } from '@reduxjs/toolkit';
-import {  loadCurrentHotel, loadHotelComments,  loadNearbyHotels } from '../action';
+import {  loadCurrentHotel, loadHotelComments,  loadNearbyHotels, resetCurrentHotel } from '../action';
 
 export type AppProcessState = {
   currentHotel: Hotel | null;
@@ -26,9 +26,18 @@ const appProcess = createReducer(initialState,(builder) => {
     })
     .addCase(loadNearbyHotels, (state, action) => {
       state.nearbyHotels = action.payload;
+      state.isNearbyLoaded = true;
     })
     .addCase(loadHotelComments, (state, action) => {
       state.currentHotelrReviews = action.payload;
+      state.isReviewsLoaded = true;
+    })
+    .addCase(resetCurrentHotel, (state) => {
+      state.nearbyHotels= [];
+      state.isNearbyLoaded= false;
+      state.currentHotel= null;
+      state.currentHotelrReviews= [];
+      state.isReviewsLoaded= false;
     });
 });
 

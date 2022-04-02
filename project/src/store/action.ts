@@ -17,3 +17,4 @@ export const redirectToRoute = createAction<string>('app/redirectToRoute');
 export const loadFavorites = createAction<Hotels>('user/loadFavorites');
 
 export const reseteFavorites = createAction('user/reseteFavorites');
+export const resetCurrentHotel = createAction('app/resetCurrentHotel');
