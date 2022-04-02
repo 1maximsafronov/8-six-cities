@@ -36,3 +36,8 @@ export type Hotel = {
 };
 
 export type Hotels = Hotel[];
+
+
+export type HotelsByCity = {
+  [city: string]: Hotels
+}

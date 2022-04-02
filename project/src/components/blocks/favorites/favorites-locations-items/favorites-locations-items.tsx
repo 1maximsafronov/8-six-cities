@@ -1,7 +1,7 @@
+import { Hotels } from 'types/hotel';
 import FavoritesPlaces from '../favorites-places/favorites-places';
 
-function FavoritesLocationsItems():JSX.Element {
-  const location = 'Amsterdam';
+function FavoritesLocationsItems({location, hotels}:Props):JSX.Element {
 
   return (
     <li className="favorites__locations-items">
@@ -12,10 +12,17 @@ function FavoritesLocationsItems():JSX.Element {
           </a>
         </div>
       </div>
-      <FavoritesPlaces />
+      <FavoritesPlaces
+        hotels={hotels}
+      />
     </li>
   );
 }
 
+
+type Props = {
+  location: string;
+  hotels: Hotels;
+}
 
 export default FavoritesLocationsItems;

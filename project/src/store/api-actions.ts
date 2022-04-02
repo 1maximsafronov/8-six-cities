@@ -1,20 +1,21 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, store } from 'store';
-import { loadHotels, loadCurrentHotel,satUserData, requireAuthorization, loadNearbyHotels, loadHotelComments, redirectToRoute } from './action';
+import { loadHotels, loadCurrentHotel,satUserData, requireAuthorization, loadNearbyHotels, loadHotelComments, redirectToRoute, loadFavorites } from './action';
 import {LoginData} from 'types/user';
 import { AuthorizationStatus, APIRoute, AppRoute } from 'const';
 import { dropToken, saveToken } from 'services/token';
+import { Hotel, Hotels } from 'types/hotel';
 
 export const fetchHotels = createAsyncThunk('data/fetchHotels',
   async () => {
-    const {data} = await api.get(APIRoute.Hotels);
+    const {data} = await api.get<Hotels>(APIRoute.Hotels);
     store.dispatch(loadHotels(data));
   },
 );
 
 export const fetchOneHotel = createAsyncThunk('data/fetchOnteHotel',
   async (id:string | undefined) => {
-    const {data} = await api.get(`${APIRoute.Hotels}/${id}`);
+    const {data} = await api.get<Hotel>(`${APIRoute.Hotels}/${id}`);
     store.dispatch(loadCurrentHotel(data));
   },
 );
@@ -30,6 +31,13 @@ export const fetchHotelComments = createAsyncThunk('data/fetchHotelComments',
   async (id:string | number | undefined) => {
     const {data} =  await api.get(`${APIRoute.Comments}/${id}`);
     store.dispatch(loadHotelComments(data));
+  },
+);
+
+export const fetchFavoritesHotels = createAsyncThunk('user/fetchFavoritesHotels',
+  async () => {
+    const {data} = await api.get<Hotels>(APIRoute.Favorite);
+    store.dispatch(loadFavorites(data));
   },
 );
 

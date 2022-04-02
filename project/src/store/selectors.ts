@@ -21,3 +21,6 @@ export const isUserAuthorized = createSelector(
   getAuthStatus,
   (status) => status === AuthorizationStatus.Auth,
 );
+
+export const getFavorites = (state: State) => state[NameSpace.UserData].favoritesHotels;
+export const getFavoritesStatus = (state: State) => state[NameSpace.UserData].isFavoritesLoaded;

@@ -1,16 +1,9 @@
 import classNames from 'classnames';
 import { Link } from 'react-router-dom';
+import { Hotel } from 'types/hotel';
 
-function FavoritesCard():JSX.Element {
-
-  const id = 1;
-  const price = 180;
-  const title = 'Nice, cozy, warm big bed apartment';
-  const type = 'Apartment';
-  const previewImage = 'img/apartment-small-03.jpg';
-  const rating = 5;
-  const isFavorite = false;
-
+function FavoritesCard({hotel}:Props):JSX.Element {
+  const {id, price,title,type,previewImage,rating,isFavorite} = hotel;
   const percent = rating * 20;
 
   const bookmarClassName = classNames(
@@ -51,6 +44,10 @@ function FavoritesCard():JSX.Element {
       </div>
     </article>
   );
+}
+
+type Props = {
+  hotel: Hotel
 }
 
 export default FavoritesCard;
