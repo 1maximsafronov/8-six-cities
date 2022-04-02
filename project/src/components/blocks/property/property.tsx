@@ -11,7 +11,7 @@ import Map from '../map/map';
 import { Hotel, Hotels } from 'types/hotel';
 import { Comments } from 'types/comment';
 import { useAppDispatch } from 'hooks';
-import { sendNewComment } from 'store/api-actions';
+import { addToFavorite, sendNewComment } from 'store/api-actions';
 
 function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
   const dispatch = useAppDispatch();
@@ -33,9 +33,17 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
     isFavorite,
   } = hotel;
 
+
+  const onFavoriteBtnClick = () => {
+    dispatch(addToFavorite({
+      hotelId: id,
+      status: isFavorite ? 0 : 1,
+    }));
+  };
+
   const onReviewSend = (text: string, commentRating: number) => {
     dispatch(sendNewComment({
-      id: id,
+      hotelId: id,
       newComment: {
         comment: text,
         rating: commentRating,
@@ -54,7 +62,7 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
             <h1 className="property__name">
               {title}
             </h1>
-            <BookmarkBtn isActive={isFavorite}/>
+            <BookmarkBtn onClick={onFavoriteBtnClick} isActive={isFavorite}/>
           </div>
           <Rating value={rating}/>
           <Features

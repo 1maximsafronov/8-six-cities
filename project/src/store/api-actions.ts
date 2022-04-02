@@ -36,16 +36,25 @@ export const fetchHotelComments = createAsyncThunk('data/fetchHotelComments',
 );
 
 export const sendNewComment = createAsyncThunk('user/sendNewComment',
-  async ({id, newComment}:{id: number | string; newComment: CommentNew;}) => {
-    const {data} = await api.post(`${APIRoute.Comments}/${id}`,newComment);
+  async ({hotelId, newComment}:{hotelId: number | string; newComment: CommentNew;}) => {
+    const {data} = await api.post(`${APIRoute.Comments}/${hotelId}`,newComment);
     store.dispatch(loadHotelComments(data));
   },
 );
 
-export const fetchFavoritesHotels = createAsyncThunk('user/fetchFavoritesHotels',
+export const fetchFavoritesHotels = createAsyncThunk('user/etchFavoritesHotels',
   async () => {
     const {data} = await api.get<Hotels>(APIRoute.Favorite);
     store.dispatch(loadFavorites(data));
+  },
+);
+
+export const addToFavorite = createAsyncThunk('user/addToFavorite',
+  async ({hotelId, status}:{hotelId: number | string; status: number}) => {
+    const {data} = await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
+
+    store.dispatch(loadCurrentHotel(data));
+    store.dispatch(fetchHotels());
   },
 );
 
