@@ -3,7 +3,7 @@ import ReviewsItem from './reviews-item/reviews-item';
 import ReviewForm from './review-form/review-form';
 import {Comments} from 'types/comment';
 import { useAppSelector } from 'hooks';
-import { AuthorizationStatus } from 'const';
+import { isUserAuthorized } from 'store/selectors';
 
 type ReviewsSectionProps = {
   className?: string;
@@ -12,10 +12,9 @@ type ReviewsSectionProps = {
 
 function ReviewsSection(props: ReviewsSectionProps):JSX.Element {
   const {className, reviews} = props;
-  const reviewsClassName = classNames('reviews', className);
-  const authStatus = useAppSelector((state) => state.authorizationStatus);
-  const isAuth = authStatus === AuthorizationStatus.Auth;
+  const isAuth = useAppSelector(isUserAuthorized);
   const reviewsCount = reviews.length;
+  const reviewsClassName = classNames('reviews', className);
 
   return (
     <section className={reviewsClassName}>

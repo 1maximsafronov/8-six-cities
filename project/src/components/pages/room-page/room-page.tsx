@@ -15,11 +15,13 @@ import {useAppSelector, useAppDispatch} from 'hooks/index';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import {fetchHotelComments, fetchNearbyHotels, fetchOneHotel} from 'store/api-actions';
+import { getCurrenHotel, getNearbyHotels, getReviews } from 'store/selectors';
 
 
 function RoomPage():JSX.Element {
-  const {nearbyHotels ,currentHotel, currentHotelrReviews: reviews} = useAppSelector((state) => state);
-
+  const nearbyHotels = useAppSelector(getNearbyHotels);
+  const currentHotel = useAppSelector(getCurrenHotel);
+  const reviews = useAppSelector(getReviews);
   const dispatch = useAppDispatch();
   const {id} = useParams();
 

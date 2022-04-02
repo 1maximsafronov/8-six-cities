@@ -1,15 +1,15 @@
-import { locations } from '../../../const';
-import { useAppDispatch, useAppSelector } from '../../../hooks';
-import { changeCity } from '../../../store/action';
-import classNames from 'classnames';
+import { useAppDispatch, useAppSelector } from 'hooks';
+import { getCurrentLocation } from 'store/selectors';
+import { changeCity } from 'store/action';
+import { locations } from 'const';
+import TabItem from './item/item';
 
 function Tabs():JSX.Element {
   const dispatch = useAppDispatch();
-  const selectedLocation = useAppSelector((state) => state.currentLocation);
+  const selectedLocation = useAppSelector(getCurrentLocation);
 
-  const onItemClick = (itemValue: string) => {
-    dispatch(changeCity(itemValue));
-  };
+  const onItemClick = (itemValue: string) => dispatch(changeCity(itemValue));
+
   return (
     <div className="tabs">
       <section className="locations container">
@@ -17,18 +17,12 @@ function Tabs():JSX.Element {
           {locations.map((item, index) => {
             const keyValue = `location-${item}`;
             return (
-              <li key={keyValue} className="locations__item">
-                <a href={`#${item}`}
-                  className={classNames('locations__item-link tabs__item',
-                    {'tabs__item--active': selectedLocation === item})}
-                  onClick={(evt) => {
-                    evt.preventDefault();
-                    onItemClick(item);
-                  }}
-                >
-                  <span>{item}</span>
-                </a>
-              </li>
+              <TabItem
+                key={keyValue}
+                value={item}
+                isActive={selectedLocation === item}
+                onClick={onItemClick}
+              />
             );
           })}
         </ul>

@@ -1,11 +1,13 @@
-import { AuthorizationStatus } from 'const';
-import { useAppSelector } from 'hooks';
 import { Link } from 'react-router-dom';
+import { useAppSelector } from 'hooks';
+import { getUserData, isUserAuthorized } from 'store/selectors';
+
 import Nav from './nav/nav';
 
 function PageHeader():JSX.Element {
-  const {userData, authorizationStatus} = useAppSelector((state) => state);
-  const isAuth = authorizationStatus === AuthorizationStatus.Auth;
+  const userData = useAppSelector(getUserData);
+  const isAuth = useAppSelector(isUserAuthorized);
+
   return (
     <header className="header">
       <div className="container">

@@ -42,3 +42,9 @@ export enum SortType  {
   TopRated = 'Top rated first',
   Popular = 'Popular'
 }
+
+export enum NameSpace {
+  UserData = 'USER_DATA',
+  AppProcess = 'APP_PROCESS',
+  AppData = 'APP_DATA',
+}
