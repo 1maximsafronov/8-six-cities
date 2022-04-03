@@ -1,53 +1,57 @@
-import { Link } from 'react-router-dom';
-
+import PlaceCardInfo from './place-card-info/place-card-info';
 import type { Hotel } from 'types/hotel';
+import PremiumMark from './place-card-premium-mark/place-card-premium-mark';
+import PlaceCardImage from './place-card-image/place-card-image';
+
+import classNames from 'classnames';
+
 
 type PlaceCardProps = {
   hotel: Hotel;
-  onHover: () => void;
+  onHover?: () => void;
+  className?: string;
+  infoClassName?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  onFavoriteClick?: () => void
 }
 
-function PlaceCard({hotel, onHover }: PlaceCardProps):JSX.Element {
-  const {isPremium, previewImage, price, title, type, id} = hotel;
+function PlaceCard(props: PlaceCardProps):JSX.Element {
+  const {
+    hotel,
+    onHover,
+    className = '',
+    infoClassName,
+    imageWidth,
+    imageHeight,
+    onFavoriteClick,
+  } = props;
 
-  const premiumMark = (
-    <div className="place-card__mark">
-      <span>Premium</span>
-    </div>
-  );
+  const parentClassName = className.split('__')[0];
 
   return (
-    <article onMouseEnter={onHover} className="cities__place-card place-card">
-      {isPremium && premiumMark}
-      <div className="cities__image-wrapper place-card__image-wrapper">
-        <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={`Place ${title}`} />
-        </Link>
-      </div>
-      <div className="place-card__info">
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
-        </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
-        </h2>
-        <p className="place-card__type">{type}</p>
-      </div>
+    <article className={classNames(className, 'place-card')}
+      onMouseEnter={onHover}
+    >
+      <PremiumMark isActive={hotel.isPremium}/>
+
+      <PlaceCardImage className={`${parentClassName}__image-wrapper`}
+        hotelId={hotel.id}
+        alt={hotel.title}
+        src={hotel.previewImage}
+        width={imageWidth}
+        height={imageHeight}
+      />
+
+      <PlaceCardInfo className={infoClassName}
+        hotelId={hotel.id}
+        type={hotel.type}
+        title={hotel.title}
+        price={hotel.price}
+        rating={hotel.rating}
+        isFavorite={hotel.isFavorite}
+        onFavoriteClick={onFavoriteClick}
+      />
     </article>
   );
 }

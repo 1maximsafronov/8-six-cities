@@ -1,13 +1,13 @@
 import {Comment} from 'types/comment';
+import { formatCommentDate, formateDateTime } from 'utils/common';
 
-type ReviewItemProps ={
-  review: Comment
-}
 
 function ReviewsItem({review}: ReviewItemProps):JSX.Element {
-  const {user: author, comment:text, rating} = review;
+  const {user: author, comment:text, rating, date} = review;
 
   const ratingToPercent = 20 * rating;
+
+  const commentDate = new Date(date);
 
   return (
     <li className="reviews__item">
@@ -25,10 +25,15 @@ function ReviewsItem({review}: ReviewItemProps):JSX.Element {
           </div>
         </div>
         <p className="reviews__text">{text}</p>
-        <time className="reviews__time" dateTime="2019-04-24">April 2019</time>
+        {/* <time className="reviews__time" dateTime="2019-04-24">April 2019</time> */}
+        <time className="reviews__time" dateTime={formateDateTime(commentDate)}>{formatCommentDate(commentDate)}</time>
       </div>
     </li>
   );
+}
+
+type ReviewItemProps ={
+  review: Comment
 }
 
 export default ReviewsItem;

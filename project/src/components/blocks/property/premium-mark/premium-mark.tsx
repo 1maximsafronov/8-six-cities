@@ -1,6 +1,10 @@
 
 
-function PropertyPremiumMark():JSX.Element {
+function PropertyPremiumMark({isActive}:Props):JSX.Element | null {
+
+  if (!isActive) {
+    return null;
+  }
 
   return (
     <div className="property__mark">
@@ -9,5 +13,8 @@ function PropertyPremiumMark():JSX.Element {
   );
 }
 
+type Props = {
+  isActive: boolean;
+}
 
 export default PropertyPremiumMark;

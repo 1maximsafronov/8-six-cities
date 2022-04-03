@@ -8,7 +8,8 @@ type SortOptionsType = {
   isOpened: boolean;
 };
 
-function SortOptions({activeItem, onChange, isOpened}: SortOptionsType):JSX.Element {
+function SortOptions(props: SortOptionsType):JSX.Element {
+  const {activeItem, onChange, isOpened} = props;
   const sortOptions = Object.values(SortType);
 
   const optionsClassName = classnames(
@@ -18,19 +19,14 @@ function SortOptions({activeItem, onChange, isOpened}: SortOptionsType):JSX.Elem
 
   return (
     <ul className={optionsClassName}>
-      {sortOptions.map((item, index) => {
-        const keyValue = `option-${index}`;
-        return (
-          <SortOption
-            key={keyValue}
-            item={item}
-            isActive={item === activeItem}
-            onClick={()=> {
-              onChange(item);
-            }}
-          />
-        );
-      })}
+      {sortOptions.map((item) => (
+        <SortOption
+          key={`option-${item}`}
+          item={item}
+          isActive={item === activeItem}
+          onClick={()=> onChange(item)}
+        />
+      ))}
     </ul>
   );
 }

@@ -1,4 +1,7 @@
+import { useAppSelector } from 'hooks';
 import {ChangeEvent, FormEvent, useState} from 'react';
+import { toast } from 'react-toastify';
+import { getCommentSendingStatus } from 'store/selectors';
 
 type ReviewFormProps = {
   onSubmit: (text: string, rating: number) => void;
@@ -6,19 +9,30 @@ type ReviewFormProps = {
 
 function ReviewForm(props: ReviewFormProps):JSX.Element {
   const {onSubmit} = props;
-
+  const isCommentSending = useAppSelector(getCommentSendingStatus);
   const [rating, setRating] = useState(0);
   const [text, setText] = useState('');
 
   const handleRatingChange = ({target}: ChangeEvent<HTMLInputElement>) => {
-    const value = parseInt(target.value, 10);
+    const value = Number(target.value);
     setRating(value);
   };
 
 
   const formSubmitHandler = (evt: FormEvent<HTMLFormElement>) => {
     evt.preventDefault();
-    onSubmit(text, rating);
+    if (text.length < 50) {
+      toast.warn('Comment length must be more then 50');
+    }
+    if (text.length > 300) {
+      toast.warn('Comment length must be less then 50');
+    }
+    if (rating === 0) {
+      toast.warn('Select rating stars');
+    }
+    if (text.length >= 50 && text.length <= 300 && rating !== 0) {
+      onSubmit(text, rating);
+    }
   };
 
 
@@ -85,7 +99,9 @@ function ReviewForm(props: ReviewFormProps):JSX.Element {
         <p className="reviews__help">
         To submit review please make sure to set <span className="reviews__star">rating</span> and describe your stay with at least <b className="reviews__text-amount">50 characters</b>.
         </p>
-        <button className="reviews__submit form__submit button" type="submit">Submit</button>
+        <button disabled={isCommentSending} className="reviews__submit form__submit button" type="submit">
+          {isCommentSending ? 'Sending...' : 'Submit'}
+        </button>
       </div>
     </form>
   );

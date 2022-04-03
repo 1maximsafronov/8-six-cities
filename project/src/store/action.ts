@@ -14,3 +14,8 @@ export const requireAuthorization = createAction<AuthorizationStatus>('user/requ
 export const loadNearbyHotels = createAction<Hotels>('data/loadNearbyHotels');
 export const loadHotelComments = createAction<Comments>('data/loadHotelComments');
 export const redirectToRoute = createAction<string>('app/redirectToRoute');
+export const loadFavorites = createAction<Hotels>('user/loadFavorites');
+
+export const reseteFavorites = createAction('user/reseteFavorites');
+export const resetCurrentHotel = createAction('app/resetCurrentHotel');
+export const setCommentSending = createAction<boolean>('process/setCommentSending');
