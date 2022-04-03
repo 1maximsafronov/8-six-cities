@@ -1,13 +1,28 @@
 import { Hotels } from 'types/hotel';
-import Card from '../favorites-card/favorites-card';
+import PlaceCard from 'components/blocks/place-card/place-card';
+import { useAppDispatch } from 'hooks';
+import { addToFavorite, fetchFavoritesHotels } from 'store/api-actions';
+
+const getStatus = (isFavorite: boolean) => isFavorite ? 0 : 1;
 
 function FavoritesPlaces({hotels}:Props):JSX.Element {
+  const dispatch = useAppDispatch();
+
+  const handleFavoriteClick = (hotelId: number | string, isFavorite: boolean) => {
+    dispatch(addToFavorite({hotelId: hotelId, status: getStatus(isFavorite)}))
+      .then(() => dispatch(fetchFavoritesHotels()));
+  };
+
   return (
     <div className="favorites__places">
       {hotels.map((hotel) => (
-        <Card
+        <PlaceCard className="favorites__card"
           key={`hotel-${hotel.id}`}
           hotel={hotel}
+          imageWidth={150}
+          imageHeight={110}
+          infoClassName="favorites__card-info"
+          onFavoriteClick={() => handleFavoriteClick(hotel.id, hotel.isFavorite)}
         />
       ))}
     </div>

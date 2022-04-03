@@ -1,6 +1,8 @@
-import { Link } from 'react-router-dom';
 import PlaceCardInfo from './place-card-info/place-card-info';
 import type { Hotel } from 'types/hotel';
+import PremiumMark from './place-card-premium-mark/place-card-premium-mark';
+import PlaceCardImage from './place-card-image/place-card-image';
+
 import classNames from 'classnames';
 
 
@@ -8,40 +10,47 @@ type PlaceCardProps = {
   hotel: Hotel;
   onHover?: () => void;
   className?: string;
+  infoClassName?: string;
+  imageWidth?: number;
+  imageHeight?: number;
+  onFavoriteClick?: () => void
 }
 
-function PlaceCard({hotel, onHover, className = '' }: PlaceCardProps):JSX.Element {
-  const {rating, isPremium,isFavorite, previewImage, price, title, type, id} = hotel;
+function PlaceCard(props: PlaceCardProps):JSX.Element {
+  const {
+    hotel,
+    onHover,
+    className = '',
+    infoClassName,
+    imageWidth,
+    imageHeight,
+    onFavoriteClick,
+  } = props;
 
   const parentClassName = className.split('__')[0];
 
-  const premiumMark = (
-    <div className="place-card__mark">
-      <span>Premium</span>
-    </div>
-  );
-
-  const cardClassName = classNames(className, 'place-card');
-  const imageWrapClassName = classNames(
-    [`${parentClassName}__image-wrapper`, 'place-card__image-wrapper'],
-  );
-
   return (
-    <article onMouseEnter={onHover} className={cardClassName}>
-      {isPremium && premiumMark}
-      <div className={imageWrapClassName}>
-        <Link to={`/offer/${id}`}>
-          <img className="place-card__image" src={previewImage} width="260" height="200" alt={`Place ${title}`} />
-        </Link>
-      </div>
+    <article className={classNames(className, 'place-card')}
+      onMouseEnter={onHover}
+    >
+      <PremiumMark isActive={hotel.isPremium}/>
 
-      <PlaceCardInfo
-        id={id}
-        type={type}
-        title={title}
-        price={price}
-        rating={rating}
-        isFavorite={isFavorite}
+      <PlaceCardImage className={`${parentClassName}__image-wrapper`}
+        hotelId={hotel.id}
+        alt={hotel.title}
+        src={hotel.previewImage}
+        width={imageWidth}
+        height={imageHeight}
+      />
+
+      <PlaceCardInfo className={infoClassName}
+        hotelId={hotel.id}
+        type={hotel.type}
+        title={hotel.title}
+        price={hotel.price}
+        rating={hotel.rating}
+        isFavorite={hotel.isFavorite}
+        onFavoriteClick={onFavoriteClick}
       />
     </article>
   );

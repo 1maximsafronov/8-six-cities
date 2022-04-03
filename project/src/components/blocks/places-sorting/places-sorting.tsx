@@ -1,20 +1,20 @@
 import { useState } from 'react';
-import SortOptions from './options/options';
+
 import {SortType} from 'const';
 
-type PlacesSortingType = {
-  onChange: (item: SortType) => void;
-  activeType: SortType;
-};
+import SortOptions from './options/options';
 
 function PlacesSorting({onChange, activeType}: PlacesSortingType):JSX.Element {
   const [isOpened, setOpened] = useState(false);
 
+  const onOptionChange = (item: SortType) => {
+    setOpened(false);
+    onChange(item);
+  };
+
   return (
     <form className="places__sorting" action="#" method="get">
-      <span className="places__sorting-caption">
-        Sort by{' '}
-      </span>
+      <span className="places__sorting-caption">Sort by{' '}</span>
       <span className="places__sorting-type" tabIndex={0}
         onClick={() => setOpened(!isOpened)}
       >
@@ -26,13 +26,15 @@ function PlacesSorting({onChange, activeType}: PlacesSortingType):JSX.Element {
       <SortOptions
         isOpened={isOpened}
         activeItem={activeType}
-        onChange={(item) => {
-          setOpened(!isOpened);
-          onChange(item);
-        }}
+        onChange={onOptionChange}
       />
     </form>
   );
 }
+
+type PlacesSortingType = {
+  onChange: (item: SortType) => void;
+  activeType: SortType;
+};
 
 export default PlacesSorting;

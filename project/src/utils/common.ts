@@ -1,5 +1,5 @@
 
-import { Hotels, Hotel } from 'types/hotel';
+import { Hotels, Hotel, HotelsByCity } from 'types/hotel';
 import { SortType } from '../const';
 
 export const getHotelsByLocation = (hotels: Hotels, location: string):Hotels => hotels.filter((hotel) => hotel.city.name === location);
@@ -20,3 +20,20 @@ export const  sortHotels = (hotels: Hotels, sortType: SortType):Hotels => {
 };
 
 export const isSelectedHotel = (selected: Hotel | undefined, hotel: Hotel): boolean => selected !== undefined && hotel.id === selected.id;
+
+export const restructureHotels = (hotels:Hotels): HotelsByCity => {
+  const hotelsByCity:HotelsByCity = hotels.reduce((acc:HotelsByCity, hotel: Hotel) => {
+    const hotelCity = hotel.city.name;
+
+    if (hotelCity in acc) {
+      acc[hotelCity].push(hotel);
+    } else {
+      acc[hotelCity] = [hotel];
+    }
+
+    return acc;
+
+  }, {});
+
+  return hotelsByCity;
+};

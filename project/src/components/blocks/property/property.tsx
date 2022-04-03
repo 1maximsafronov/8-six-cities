@@ -12,6 +12,7 @@ import { Hotel, Hotels } from 'types/hotel';
 import { Comments } from 'types/comment';
 import { useAppDispatch } from 'hooks';
 import { addToFavorite, sendNewComment } from 'store/api-actions';
+import { fetchOneHotel } from 'store/api-actions';
 
 function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
   const dispatch = useAppDispatch();
@@ -39,7 +40,10 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
     dispatch(addToFavorite({
       hotelId: id,
       status: isFavorite ? 0 : 1,
-    }));
+    }))
+      .then(() => {
+        dispatch(fetchOneHotel(id));
+      });
   };
 
   const onReviewSend = (text: string, commentRating: number) => {

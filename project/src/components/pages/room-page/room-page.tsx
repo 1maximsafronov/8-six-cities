@@ -44,7 +44,10 @@ function RoomPage():JSX.Element {
           reviews={reviews}
         />
         <div className="container">
-          <NearPlaces hotels={nearbyHotels} />
+          <NearPlaces
+            currentHotel={currentHotel}
+            hotels={nearbyHotels}
+          />
         </div>
       </main>
     </div>

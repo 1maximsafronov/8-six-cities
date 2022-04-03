@@ -6,9 +6,9 @@ import Map from '../map/map';
 import Places from '../places/places';
 
 function CitiesSection(props: CitiesSectionProps):JSX.Element {
-  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
-
   const {hotels, currentLocation, isEmpty, isLoading} = props;
+
+  const [selectedHotel, setSelectedHotel] = useState<Hotel | undefined>(undefined);
 
   if (isLoading) {
     return <Loading />;
@@ -18,16 +18,16 @@ function CitiesSection(props: CitiesSectionProps):JSX.Element {
     return <Empty currentLocation={currentLocation}/>;
   }
 
+  const onCardHover = (hotel: Hotel | undefined) =>
+    setSelectedHotel(hotel);
+
   return (
     <div className="cities">
       <div className="cities__places-container container">
         <Places
           hotels={hotels}
           location={currentLocation}
-          onCardHover={
-            (hotel: Hotel | undefined) =>
-              setSelectedHotel(hotel)
-          }
+          onCardHover={onCardHover}
         />
         <div className="cities__right-section">
           <Map className="cities__map"

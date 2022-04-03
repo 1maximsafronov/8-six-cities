@@ -14,7 +14,6 @@ function Favorites(props:FavoritesProps):JSX.Element {
     return <Empty />;
   }
 
-
   return (
     <section className="favorites">
       <h1 className="favorites__title">Saved listing</h1>

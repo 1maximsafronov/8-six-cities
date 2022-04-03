@@ -15,7 +15,7 @@ export const fetchHotels = createAsyncThunk('data/fetchHotels',
 );
 
 export const fetchOneHotel = createAsyncThunk('data/fetchOnteHotel',
-  async (id:string | undefined) => {
+  async (id:string | number | undefined) => {
     const {data} = await api.get<Hotel>(`${APIRoute.Hotels}/${id}`);
     store.dispatch(loadCurrentHotel(data));
   },
@@ -51,10 +51,7 @@ export const fetchFavoritesHotels = createAsyncThunk('user/etchFavoritesHotels',
 
 export const addToFavorite = createAsyncThunk('user/addToFavorite',
   async ({hotelId, status}:{hotelId: number | string; status: number}) => {
-    const {data} = await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
-
-    store.dispatch(loadCurrentHotel(data));
-    store.dispatch(fetchHotels());
+    await api.post(`${APIRoute.Favorite}/${hotelId}/${status}`);
   },
 );
 

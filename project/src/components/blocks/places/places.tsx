@@ -28,9 +28,7 @@ function Places({hotels, location, onCardHover}:PlacesProps) :JSX.Element {
       <h2 className="visually-hidden">Places</h2>
       <b className="places__found">{hotelsCount} places to stay in {location}</b>
       <PlacesSorting
-        onChange={(newSortType) => {
-          setSortType(newSortType);
-        }}
+        onChange={(newSortType) => setSortType(newSortType)}
         activeType={sortType}
       />
       <PlacesList offers={sortedHotels} onCardHover={handleCardHover}/>
