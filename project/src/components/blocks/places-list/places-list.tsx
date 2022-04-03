@@ -15,7 +15,7 @@ function PlacesList(props: PlacesListProps):JSX.Element {
       {offers.map((hotel) => {
         const keyValue = `hotel-${hotel.id}`;
         return(
-          <PlaceCard
+          <PlaceCard className='cities__place-card'
             key={keyValue}
             onHover={() => {
               onCardHover(hotel.id);

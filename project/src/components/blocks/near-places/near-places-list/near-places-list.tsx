@@ -1,5 +1,5 @@
 import { Hotels } from 'types/hotel';
-import NearPlacesItem from '../item/item';
+import PlaceCard from 'components/blocks/place-card/place-card';
 
 function NearPlacesList({hotels}:NearPlacesProps):JSX.Element {
   return (
@@ -7,7 +7,12 @@ function NearPlacesList({hotels}:NearPlacesProps):JSX.Element {
       {hotels.map((hotel) => {
         const keyValue = `hotel-${hotel.id}`;
 
-        return <NearPlacesItem hotel={hotel} key={keyValue}/>;
+        return (
+          <PlaceCard className='near-places__card'
+            hotel={hotel}
+            key={keyValue}
+          />
+        );
       })}
 
     </div>

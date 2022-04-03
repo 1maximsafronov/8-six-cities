@@ -1,5 +1,5 @@
 import { Hotels } from 'types/hotel';
-import NearPlacesList from './list/list';
+import NearPlacesList from './near-places-list/near-places-list';
 
 function NearPlaces({hotels}: NearPlacesProps):JSX.Element {
   return (

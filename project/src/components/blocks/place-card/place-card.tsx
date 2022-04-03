@@ -1,14 +1,19 @@
 import { Link } from 'react-router-dom';
-
+import PlaceCardInfo from './place-card-info/place-card-info';
 import type { Hotel } from 'types/hotel';
+import classNames from 'classnames';
+
 
 type PlaceCardProps = {
   hotel: Hotel;
-  onHover: () => void;
+  onHover?: () => void;
+  className?: string;
 }
 
-function PlaceCard({hotel, onHover }: PlaceCardProps):JSX.Element {
-  const {isPremium, previewImage, price, title, type, id} = hotel;
+function PlaceCard({hotel, onHover, className = '' }: PlaceCardProps):JSX.Element {
+  const {rating, isPremium,isFavorite, previewImage, price, title, type, id} = hotel;
+
+  const parentClassName = className.split('__')[0];
 
   const premiumMark = (
     <div className="place-card__mark">
@@ -16,38 +21,28 @@ function PlaceCard({hotel, onHover }: PlaceCardProps):JSX.Element {
     </div>
   );
 
+  const cardClassName = classNames(className, 'place-card');
+  const imageWrapClassName = classNames(
+    [`${parentClassName}__image-wrapper`, 'place-card__image-wrapper'],
+  );
+
   return (
-    <article onMouseEnter={onHover} className="cities__place-card place-card">
+    <article onMouseEnter={onHover} className={cardClassName}>
       {isPremium && premiumMark}
-      <div className="cities__image-wrapper place-card__image-wrapper">
+      <div className={imageWrapClassName}>
         <Link to={`/offer/${id}`}>
           <img className="place-card__image" src={previewImage} width="260" height="200" alt={`Place ${title}`} />
         </Link>
       </div>
-      <div className="place-card__info">
-        <div className="place-card__price-wrapper">
-          <div className="place-card__price">
-            <b className="place-card__price-value">&euro;{price}</b>
-            <span className="place-card__price-text">&#47;&nbsp;night</span>
-          </div>
-          <button className="place-card__bookmark-button button" type="button">
-            <svg className="place-card__bookmark-icon" width="18" height="19">
-              <use xlinkHref="#icon-bookmark"></use>
-            </svg>
-            <span className="visually-hidden">To bookmarks</span>
-          </button>
-        </div>
-        <div className="place-card__rating rating">
-          <div className="place-card__stars rating__stars">
-            <span style={{width: '80%'}}></span>
-            <span className="visually-hidden">Rating</span>
-          </div>
-        </div>
-        <h2 className="place-card__name">
-          <Link to={`/offer/${id}`}>{title}</Link>
-        </h2>
-        <p className="place-card__type">{type}</p>
-      </div>
+
+      <PlaceCardInfo
+        id={id}
+        type={type}
+        title={title}
+        price={price}
+        rating={rating}
+        isFavorite={isFavorite}
+      />
     </article>
   );
 }
