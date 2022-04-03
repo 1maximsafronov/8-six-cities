@@ -19,7 +19,7 @@ function Places({hotels, location, onCardHover}:PlacesProps) :JSX.Element {
   const sortedHotels = sortHotels(hotels, sortType);
 
   const handleCardHover = (id: number | string) =>{
-    const currentOffer = hotels.find((hotel) => false);
+    const currentOffer = hotels.find((hotel) => hotel.id === id);
     onCardHover(currentOffer);
   };
 

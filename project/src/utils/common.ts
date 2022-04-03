@@ -1,5 +1,5 @@
 
-import { Hotels } from 'types/hotel';
+import { Hotels, Hotel } from 'types/hotel';
 import { SortType } from '../const';
 
 export const getHotelsByLocation = (hotels: Hotels, location: string):Hotels => hotels.filter((hotel) => hotel.city.name === location);
@@ -18,3 +18,5 @@ export const  sortHotels = (hotels: Hotels, sortType: SortType):Hotels => {
       return hotels;
   }
 };
+
+export const isSelectedHotel = (selected: Hotel | undefined, hotel: Hotel): boolean => selected !== undefined && hotel.id === selected.id;

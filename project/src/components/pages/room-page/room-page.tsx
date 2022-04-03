@@ -28,7 +28,7 @@ function RoomPage():JSX.Element {
   }, [id]);
 
 
-  if (currentHotel === null) {
+  if (currentHotel === null || !nearbyHotels || nearbyHotels.length <= 0) {
     return <p>Loading...</p>;
   }
 

@@ -18,7 +18,6 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
 
   const {
     id,
-    city,
     host,
     type,
     price,
@@ -32,6 +31,8 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
     description,
     isFavorite,
   } = hotel;
+
+  const hotelsOnMap = [...nearbyHotels, hotel];
 
 
   const onFavoriteBtnClick = () => {
@@ -87,8 +88,7 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
       </div>
       <Map className="property__map"
         selectedHotel={hotel}
-        hotels={nearbyHotels}
-        city={city}
+        hotels={hotelsOnMap}
       />
     </section>
   );

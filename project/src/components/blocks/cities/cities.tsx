@@ -33,7 +33,6 @@ function CitiesSection(props: CitiesSectionProps):JSX.Element {
           <Map className="cities__map"
             selectedHotel={selectedHotel}
             hotels={hotels}
-            city={hotels[0].city}
           />
         </div>
       </div>

@@ -1,11 +1,11 @@
 import {useEffect, useState, MutableRefObject} from 'react';
 import {Map, TileLayer} from 'leaflet';
-import {City} from '../types/hotel';
+import {City} from 'types/hotel';
 
-type MapRefType = MutableRefObject<HTMLElement | null>;
-type UseMapType =  Map | null;
-
-function useMap(mapRef:MapRefType, city: City): UseMapType {
+function useMap(
+  mapRef: MutableRefObject<HTMLElement | null>,
+  city: City,
+): Map | null {
   const [map, setMap] = useState<Map | null>(null);
 
   useEffect(() => {
@@ -30,6 +30,14 @@ function useMap(mapRef:MapRefType, city: City): UseMapType {
 
       setMap(instance);
     }
+
+    if (map) {
+      map.flyTo({
+        lat: city.location.latitude,
+        lng: city.location.longitude,
+      }, city.location.zoom);
+    }
+
   }, [mapRef, map, city]);
 
   return map;
