@@ -54,3 +54,14 @@ export enum HTTP_CODE {
   UNAUTHORIZED = 401,
   NOT_FOUND = 404,
 }
+
+export type offerByType = {
+  [key: string]: string;
+}
+
+export const offerType: offerByType = {
+  'house': 'House',
+  'hotel': 'Hotel',
+  'room': 'Private Room',
+  'apartment': 'Apartment',
+};

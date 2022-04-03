@@ -13,6 +13,14 @@ export type Comment = {
   user: CommentAuthor;
 };
 
+export type ServerComment = {
+  id: number | string
+  rating: number;
+  comment: string;
+  date: string;
+  user: CommentAuthor;
+}
+
 export type Comments = Comment[];
 
 

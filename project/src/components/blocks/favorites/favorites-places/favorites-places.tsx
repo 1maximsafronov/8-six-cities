@@ -1,6 +1,6 @@
 import { Hotels } from 'types/hotel';
 import PlaceCard from 'components/blocks/place-card/place-card';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch} from 'hooks';
 import { addToFavorite, fetchFavoritesHotels } from 'store/api-actions';
 
 const getStatus = (isFavorite: boolean) => isFavorite ? 0 : 1;

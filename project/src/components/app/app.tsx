@@ -8,8 +8,13 @@ import LoginPage from '../pages/login-page/login-page';
 import FavoritesPage from '../pages/favorites-page/favorites-page';
 import RoomPage from '../pages/room-page/room-page';
 import NotFoundPage from '../pages/not-found-page/not-found-page';
+import PrivateRoute from 'components/blocks/private-route/private-route';
+import { useAppSelector } from 'hooks';
+import { getAuthStatus } from 'store/selectors';
 
 function App(): JSX.Element {
+  const authStatus = useAppSelector(getAuthStatus);
+
   return (
     <HistoryRouter history={browserHistory}>
       <Routes>
@@ -19,11 +24,15 @@ function App(): JSX.Element {
         />
         <Route
           path={AppRoute.Login}
-          element={<LoginPage />}
+          element={<LoginPage authorizationStatus={authStatus} />}
         />
         <Route
           path={AppRoute.Favorites}
-          element={<FavoritesPage />}
+          element={
+            <PrivateRoute authorizationStatus={authStatus}>
+              <FavoritesPage />
+            </PrivateRoute>
+          }
         />
         <Route
           path={AppRoute.Room}

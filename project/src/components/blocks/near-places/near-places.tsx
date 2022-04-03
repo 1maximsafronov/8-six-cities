@@ -1,18 +1,27 @@
 import { Hotel, Hotels } from 'types/hotel';
 import PlaceCard from 'components/blocks/place-card/place-card';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { addToFavorite, fetchNearbyHotels } from 'store/api-actions';
+import { isUserAuthorized } from 'store/selectors';
+import { redirectToRoute } from 'store/action';
+import { AppRoute } from 'const';
 
 const getStatus = (isFavorite: boolean) => isFavorite ? 0 : 1;
 
 function NearPlaces({hotels, currentHotel}: NearPlacesProps):JSX.Element {
   const dispatch = useAppDispatch();
+  const isAuth = useAppSelector(isUserAuthorized);
 
   const onFavoriteClick = (hotelId: string | number, isFavorite: boolean) => {
-    dispatch(
-      addToFavorite({hotelId, status: getStatus(isFavorite)}),
-    )
-      .then(() => dispatch(fetchNearbyHotels(currentHotel.id)));
+    if (isAuth) {
+      dispatch(
+        addToFavorite({hotelId, status: getStatus(isFavorite)}),
+      )
+        .then(() => dispatch(fetchNearbyHotels(currentHotel.id)));
+    } else {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+
   };
 
   return (

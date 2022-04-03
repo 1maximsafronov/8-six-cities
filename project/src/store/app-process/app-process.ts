@@ -1,7 +1,7 @@
 import { Hotels, Hotel } from 'types/hotel';
 import { Comments } from 'types/comment';
 import { createReducer } from '@reduxjs/toolkit';
-import {  loadCurrentHotel, loadHotelComments,  loadNearbyHotels, resetCurrentHotel } from '../action';
+import {  loadCurrentHotel, loadHotelComments,  loadNearbyHotels, resetCurrentHotel, setCommentSending } from '../action';
 
 export type AppProcessState = {
   currentHotel: Hotel | null;
@@ -9,6 +9,7 @@ export type AppProcessState = {
   isNearbyLoaded: boolean;
   currentHotelrReviews: Comments;
   isReviewsLoaded: boolean;
+  isCommentSanding: boolean;
 };
 
 const initialState:AppProcessState = {
@@ -17,6 +18,7 @@ const initialState:AppProcessState = {
   currentHotel: null,
   currentHotelrReviews: [],
   isReviewsLoaded: false,
+  isCommentSanding: false,
 };
 
 const appProcess = createReducer(initialState,(builder) => {
@@ -38,6 +40,9 @@ const appProcess = createReducer(initialState,(builder) => {
       state.currentHotel= null;
       state.currentHotelrReviews= [];
       state.isReviewsLoaded= false;
+    })
+    .addCase(setCommentSending, (state, action) => {
+      state.isCommentSanding = action.payload;
     });
 });
 

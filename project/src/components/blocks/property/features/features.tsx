@@ -1,4 +1,4 @@
-
+import { offerType } from 'const';
 
 function PropertyFeatures(props:PropertyFeaturesProps):JSX.Element {
   const {bedrooms, maxAdults, type} = props;
@@ -6,7 +6,7 @@ function PropertyFeatures(props:PropertyFeaturesProps):JSX.Element {
   return (
     <ul className="property__features">
       <li className="property__feature property__feature--entire">
-        {type}
+        {offerType[type]}
       </li>
       <li className="property__feature property__feature--bedrooms">
         {bedrooms} Bedrooms

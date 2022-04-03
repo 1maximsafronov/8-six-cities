@@ -24,3 +24,5 @@ export const isUserAuthorized = createSelector(
 
 export const getFavorites = (state: State) => state[NameSpace.UserData].favoritesHotels;
 export const getFavoritesStatus = (state: State) => state[NameSpace.UserData].isFavoritesLoaded;
+
+export const getCommentSendingStatus = (state: State) => state[NameSpace.AppProcess].isCommentSanding;

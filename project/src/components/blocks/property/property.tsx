@@ -10,13 +10,16 @@ import ReviewsSection from '../reviews/reviews';
 import Map from '../map/map';
 import { Hotel, Hotels } from 'types/hotel';
 import { Comments } from 'types/comment';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { addToFavorite, sendNewComment } from 'store/api-actions';
 import { fetchOneHotel } from 'store/api-actions';
+import { isUserAuthorized } from 'store/selectors';
+import { redirectToRoute, setCommentSending } from 'store/action';
+import { AppRoute } from 'const';
 
 function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
+  const isAuth = useAppSelector(isUserAuthorized);
   const dispatch = useAppDispatch();
-
   const {
     id,
     host,
@@ -35,18 +38,23 @@ function Property({hotel, nearbyHotels, reviews}:Props):JSX.Element {
 
   const hotelsOnMap = [...nearbyHotels, hotel];
 
-
   const onFavoriteBtnClick = () => {
-    dispatch(addToFavorite({
-      hotelId: id,
-      status: isFavorite ? 0 : 1,
-    }))
-      .then(() => {
-        dispatch(fetchOneHotel(id));
-      });
+    if (isAuth) {
+      dispatch(addToFavorite({
+        hotelId: id,
+        status: isFavorite ? 0 : 1,
+      }))
+        .then(() => {
+          dispatch(fetchOneHotel(id));
+        });
+    } else {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
+
   };
 
   const onReviewSend = (text: string, commentRating: number) => {
+    dispatch(setCommentSending(true));
     dispatch(sendNewComment({
       hotelId: id,
       newComment: {

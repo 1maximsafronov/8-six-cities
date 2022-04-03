@@ -37,3 +37,22 @@ export const restructureHotels = (hotels:Hotels): HotelsByCity => {
 
   return hotelsByCity;
 };
+
+export const formatCommentDate = (date: Date) => {
+  const string = date.toLocaleDateString('en-US', {
+    month: 'long',
+    year: 'numeric',
+  });
+
+  // December 20, 2020
+  return string;
+};
+
+export const formateDateTime = (date: Date) => {
+  const y = date.getFullYear();
+  const m = String(date.getMonth() + 1).padStart(2,'0');
+  const d = String(date.getDate()).padStart(2,'0');
+
+  // 2020-12-20
+  return `${y}-${m}-${d}`;
+};

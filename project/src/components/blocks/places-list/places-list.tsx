@@ -1,7 +1,10 @@
 import PlaceCard from '../place-card/place-card';
 import {Hotels} from 'types/hotel';
-import { useAppDispatch } from 'hooks';
+import { useAppDispatch, useAppSelector } from 'hooks';
 import { addToFavorite, fetchHotels } from 'store/api-actions';
+import { isUserAuthorized } from 'store/selectors';
+import { redirectToRoute } from 'store/action';
+import { AppRoute } from 'const';
 
 type PlacesListProps = {
   offers: Hotels;
@@ -10,12 +13,16 @@ type PlacesListProps = {
 
 function PlacesList(props: PlacesListProps):JSX.Element {
   const {offers, onCardHover} = props;
-
+  const isAuth = useAppSelector(isUserAuthorized);
   const dispatch = useAppDispatch();
 
   const hanldeFavoriteClick = (id: string | number, status: number) => {
-    dispatch(addToFavorite({hotelId: id, status: status}))
-      .then(() => dispatch(fetchHotels()));
+    if (isAuth) {
+      dispatch(addToFavorite({hotelId: id, status: status}))
+        .then(() => dispatch(fetchHotels()));
+    } else {
+      dispatch(redirectToRoute(AppRoute.Login));
+    }
   };
 
   return (

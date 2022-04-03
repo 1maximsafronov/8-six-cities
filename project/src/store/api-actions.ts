@@ -1,12 +1,13 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import { api, store } from 'store';
-import { loadHotels, loadCurrentHotel,satUserData, requireAuthorization, loadNearbyHotels, loadHotelComments, redirectToRoute, loadFavorites } from './action';
+import { loadHotels, loadCurrentHotel,satUserData, requireAuthorization, loadNearbyHotels, loadHotelComments, redirectToRoute, loadFavorites, setCommentSending } from './action';
 import {LoginData} from 'types/user';
 import { AuthorizationStatus, APIRoute, AppRoute } from 'const';
 import { dropToken, saveToken } from 'services/token';
 import { Hotel, Hotels } from 'types/hotel';
 import { CommentNew } from 'types/comment';
 import { errorHandle } from 'services/error-handle';
+import { adapteCommentToClient } from 'utils/adapter';
 
 export const fetchHotels = createAsyncThunk('data/fetchHotels',
   async () => {
@@ -46,7 +47,7 @@ export const fetchHotelComments = createAsyncThunk('data/fetchHotelComments',
   async (id:string | number | undefined) => {
     try {
       const {data} =  await api.get(`${APIRoute.Comments}/${id}`);
-      store.dispatch(loadHotelComments(data));
+      store.dispatch(loadHotelComments(data.map(adapteCommentToClient)));
     } catch (error) {
       errorHandle(error);
     }
@@ -59,8 +60,10 @@ export const sendNewComment = createAsyncThunk('user/sendNewComment',
     try {
       const {data} = await api.post(`${APIRoute.Comments}/${hotelId}`,newComment);
       store.dispatch(loadHotelComments(data));
+      store.dispatch(setCommentSending(false));
     } catch (error) {
       errorHandle(error);
+      store.dispatch(setCommentSending(false));
     }
   },
 );

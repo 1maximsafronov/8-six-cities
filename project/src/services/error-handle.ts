@@ -1,5 +1,5 @@
 import request from 'axios';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import {HTTP_CODE} from 'const';
 
 export type ErrorType = unknown;

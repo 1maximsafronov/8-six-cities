@@ -7,7 +7,7 @@ function PropertyGallery({images}:PropertyGalleryProps):JSX.Element {
   return (
     <div className="property__gallery-container container">
       <div className="property__gallery">
-        {images.map((image, index) => {
+        {images.slice(0, 6).map((image, index) => {
           const keyValue = `image-${index}`;
           return (
             <div key={keyValue} className="property__image-wrapper">
